@@ -34,17 +34,22 @@ from players.dealer import Dealer
 
 class Game:
 	FPS: int = 30
-	WIDTH: int = 800
-	HEIGHT: int = 600
+	WIDTH: int = 1357
+	HEIGHT: int = 765
 
 	def __init__(self, settings: Dict) -> None:
 		"""Основний файл гри: логіка, гравці"""
 		pygame.init()
-		self.clock = pygame.time.Clock()
 
-		pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+		sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
 		pygame.display.set_caption(f'BlackJack ({settings.get("description")}) {settings.get("version_app")}')
+
+		sc_table = pygame.image.load('images/blackjack-table.png').convert()
+		sc_main.blit(sc_table, (0, 0))
+
+		pygame.display.update()
+		self.clock = pygame.time.Clock()
 
 		self.player = Player()
 		self.dealer = Dealer()
@@ -57,5 +62,7 @@ class Game:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					exit()
+				elif event.type == pygame.MOUSEBUTTONDOWN:
+					pass
 
 			self.clock.tick(self.FPS)
