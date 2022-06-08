@@ -30,6 +30,7 @@ import pygame
 
 from players.player import Player
 from players.dealer import Dealer
+from sprites.desired_area import DesiredArea
 
 
 class Game:
@@ -47,6 +48,9 @@ class Game:
 
 		sc_table = pygame.image.load('images/blackjack-table.png').convert()
 		sc_main.blit(sc_table, (0, 0))
+
+		self.test = DesiredArea()
+		sc_main.blit(self.test.get_current_sprite('clubs', 'A'), (0, 0))
 
 		pygame.display.update()
 		self.clock = pygame.time.Clock()

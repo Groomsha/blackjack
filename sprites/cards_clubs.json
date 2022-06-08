@@ -1,0 +1,40 @@
+{
+  "frames": {
+        "clubs_A.png": {
+              "frame": {"x":0,"y":0,"w":149,"h":216},
+              "rotated": false,
+              "trimmed": false,
+              "spriteSourceSize": {"x":0,"y":0,"w":149,"h":216},
+              "sourceSize": {"w":149,"h":216}
+              },
+        "clubs_2.png": {
+              "frame": {"x":149,"y":0,"w":149,"h":216},
+              "rotated": false,
+              "trimmed": false,
+              "spriteSourceSize": {"x":0,"y":0,"w":149,"h":216},
+              "sourceSize": {"w":149,"h":216}
+              },
+        "clubs_3.png": {
+              "frame": {"x":298,"y":0,"w":149,"h":216},
+              "rotated": false,
+              "trimmed": false,
+              "spriteSourceSize": {"x":0,"y":0,"w":149,"h":216},
+              "sourceSize": {"w":149,"h":216}
+              },
+        "clubs_4.png": {
+              "frame": {"x":447,"y":0,"w":149,"h":216},
+              "rotated": false,
+              "trimmed": false,
+              "spriteSourceSize": {"x":0,"y":0,"w":149,"h":216},
+              "sourceSize": {"w":149,"h":216}
+              },
+        "clubs_5.png": {
+              "frame": {"x":596,"y":0,"w":149,"h":216},
+              "rotated": false,
+              "trimmed": false,
+              "spriteSourceSize": {"x":0,"y":0,"w":149,"h":216},
+              "sourceSize": {"w":149,"h":216}
+          }
+
+  }
+  }
