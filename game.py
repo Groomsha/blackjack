@@ -1,7 +1,9 @@
 from typing import Dict
 
 import pygame
-pygame.init()
+
+from players.player import Player
+from players.dealer import Dealer
 
 
 class Game:
@@ -10,14 +12,17 @@ class Game:
 	HEIGHT: int = 600
 
 	def __init__(self, settings: Dict) -> None:
-		pygame.display.set_mode((self.WIDTH, self.HEIGHT))
-		pygame.display.set_icon(pygame.image.load('./images/blackjack.ico'))
-		pygame.display.set_caption(f'BlackJack ({settings.get("description")}) {settings.get("version_app")}')
-
+		pygame.init()
 		self.clock = pygame.time.Clock()
 
-		self.main_game_loop()
+		pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
+		pygame.display.set_caption(f'BlackJack ({settings.get("description")}) {settings.get("version_app")}')
 
+		self.player = Player()
+		self.dealer = Dealer()
+
+		self.main_game_loop()
 
 	def main_game_loop(self) -> None:
 		while True:
