@@ -49,6 +49,7 @@ class SpriteSheet:
 	def __get_sprite(self, x: int, y: int, w: int, h: int) -> Any:
 		"""Метод повертає вирізану область"""
 		sprite = pygame.Surface((w, h))
+		# sprite.set_colorkey((0, 0, 0))
 		sprite.blit(self.sprite_sheet, (0, 0), (x, y, w, h))
 
 		return sprite

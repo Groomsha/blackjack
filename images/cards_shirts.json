@@ -1,0 +1,12 @@
+{
+  "frames": {
+        "shirts_red.png": {
+              "frame": {"x":79,"y":227,"w":386,"h":559},
+              "frameSize": {"w":148,"h":215}
+              },
+        "shirts_blue.png": {
+              "frame": {"x":524,"y":221,"w":386,"h":559},
+              "frameSize": {"w":148,"h":215}
+              }
+        }
+  }

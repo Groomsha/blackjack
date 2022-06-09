@@ -51,11 +51,11 @@ class Game:
 
 		####################
 		self.test = DesiredArea()
-		sc_main.blit(self.test.get_current_sprite('peaks', 'A'), (20, 100))
-		sc_main.blit(self.test.get_current_sprite('peaks', '2'), (180, 100))
+		sc_main.blit(self.test.get_current_sprite('worms', 'V'), (20, 100))
+		sc_main.blit(self.test.get_current_sprite('peaks', '5'), (700, 100))
 		sc_main.blit(self.test.get_current_sprite('peaks', '3'), (340, 100))
-		sc_main.blit(self.test.get_current_sprite('peaks', '4'), (495, 100))
-		sc_main.blit(self.test.get_current_sprite('peaks', '5'), (650, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', '4'), (495, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', '5'), (650, 100))
 		# sc_main.blit(self.test.get_current_sprite('peaks', '6'), (20, 100))
 		# sc_main.blit(self.test.get_current_sprite('peaks', '7'), (180, 100))
 		# sc_main.blit(self.test.get_current_sprite('peaks', '8'), (340, 100))
