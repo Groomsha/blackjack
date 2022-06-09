@@ -2,7 +2,9 @@
   "frames": {
         "chips_all.png": {
               "frame": {"x":0,"y":10,"w":449,"h":415},
-              "frameSize": {"w":148,"h":215}
-              }
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": true
         }
+      }
   }

@@ -18,39 +18,57 @@
               },
         "clubs_5.png": {
               "frame": {"x":590,"y":0,"w":149,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               },
         "clubs_6.png": {
               "frame": {"x":737,"y":0,"w":150,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               },
         "clubs_7.png": {
               "frame": {"x":884,"y":0,"w":150,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               },
         "clubs_8.png": {
               "frame": {"x":1032,"y":0,"w":150,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               },
         "clubs_9.png": {
               "frame": {"x":1180,"y":0,"w":150,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               },
         "clubs_10.png": {
               "frame": {"x":1327,"y":0,"w":150,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               },
         "clubs_V.png": {
               "frame": {"x":1475,"y":0,"w":150,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               },
         "clubs_D.png": {
               "frame": {"x":1624,"y":0,"w":149,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               },
         "clubs_K.png": {
               "frame": {"x":1770,"y":0,"w":150,"h":215},
-              "frameSize": {"w":148,"h":215}
+              "frameSize": {"w":148,"h":215},
+              "rotated": {"x":0, "y":0},
+              "alfa24": false
               }
           }
   }
