@@ -1,0 +1,56 @@
+{
+  "frames": {
+        "worms_A.png": {
+              "frame": {"x":0,"y":428,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_2.png": {
+              "frame": {"x":147,"y":428,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_3.png": {
+              "frame": {"x":295,"y":428,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_4.png": {
+              "frame": {"x":443,"y":428,"w":148,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_5.png": {
+              "frame": {"x":590,"y":428,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_6.png": {
+              "frame": {"x":737,"y":428,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_7.png": {
+              "frame": {"x":884,"y":428,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_8.png": {
+              "frame": {"x":1032,"y":428,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_9.png": {
+              "frame": {"x":1180,"y":428,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_10.png": {
+              "frame": {"x":1327,"y":428,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_V.png": {
+              "frame": {"x":1475,"y":428,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_D.png": {
+              "frame": {"x":1624,"y":428,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "worms_K.png": {
+              "frame": {"x":1770,"y":428,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              }
+          }
+  }

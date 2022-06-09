@@ -1,0 +1,56 @@
+{
+  "frames": {
+        "peaks_A.png": {
+              "frame": {"x":0,"y":642,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_2.png": {
+              "frame": {"x":147,"y":642,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_3.png": {
+              "frame": {"x":295,"y":642,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_4.png": {
+              "frame": {"x":443,"y":642,"w":148,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_5.png": {
+              "frame": {"x":590,"y":642,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_6.png": {
+              "frame": {"x":737,"y":642,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_7.png": {
+              "frame": {"x":884,"y":642,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_8.png": {
+              "frame": {"x":1032,"y":642,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_9.png": {
+              "frame": {"x":1180,"y":642,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_10.png": {
+              "frame": {"x":1327,"y":642,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_V.png": {
+              "frame": {"x":1475,"y":642,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_D.png": {
+              "frame": {"x":1624,"y":642,"w":149,"h":215},
+              "frameSize": {"w":148,"h":215}
+              },
+        "peaks_K.png": {
+              "frame": {"x":1770,"y":642,"w":150,"h":215},
+              "frameSize": {"w":148,"h":215}
+              }
+          }
+  }

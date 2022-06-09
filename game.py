@@ -49,8 +49,22 @@ class Game:
 		sc_table = pygame.image.load('images/blackjack-table.png').convert()
 		sc_main.blit(sc_table, (0, 0))
 
+		####################
 		self.test = DesiredArea()
-		sc_main.blit(self.test.get_current_sprite('clubs', 'A'), (0, 0))
+		sc_main.blit(self.test.get_current_sprite('peaks', 'A'), (20, 100))
+		sc_main.blit(self.test.get_current_sprite('peaks', '2'), (180, 100))
+		sc_main.blit(self.test.get_current_sprite('peaks', '3'), (340, 100))
+		sc_main.blit(self.test.get_current_sprite('peaks', '4'), (495, 100))
+		sc_main.blit(self.test.get_current_sprite('peaks', '5'), (650, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', '6'), (20, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', '7'), (180, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', '8'), (340, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', '9'), (495, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', '10'), (650, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', 'V'), (20, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', 'D'), (180, 100))
+		# sc_main.blit(self.test.get_current_sprite('peaks', 'K'), (340, 100))
+		####################
 
 		pygame.display.update()
 		self.clock = pygame.time.Clock()

@@ -24,26 +24,31 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict
+from typing import Dict, Any
 
 from sprites.spritesheet import SpriteSheet
+from sprites.get_sprites import GetSprites
 
 
 class DesiredArea:
-	def __init__(self):
+	def __init__(self) -> None:
+		"""Клас вибирає потрібну область на зображенні"""
 		self.__cards_dict: Dict = {
-			'clubs': ['images/blackjack-cards.png', 'sprites/cards_clubs.json'],
-			'timbrel': ['images/blackjack-cards.png', 'sprites/cards_timbrel.json'],
-			'worms': ['images/blackjack-cards.png', 'sprites/cards_worms.json'],
-			'peaks': ['images/blackjack-cards.png', 'sprites/cards_peaks.json'],
-			'shirts': ['images/blackjack-shirt.png', 'sprites/cards_shirts.json'],
-			'chips': ['images/blackjack-chips.png', 'sprites/cards_chips.json']
+			'clubs': ['images/blackjack-cards.png', 'images/cards_clubs.json'],
+			'timbrel': ['images/blackjack-cards.png', 'images/cards_timbrel.json'],
+			'worms': ['images/blackjack-cards.png', 'images/cards_worms.json'],
+			'peaks': ['images/blackjack-cards.png', 'images/cards_peaks.json'],
+			'shirts': ['images/blackjack-shirt.png', 'images/cards_shirts.json'],
+			'chips': ['images/blackjack-chips.png', 'images/cards_chips.json']
 		}
 
 	@property
 	def cards_dict(self) -> Dict:
 		return self.__cards_dict
 
-	def get_current_sprite(self, name: str, denomination: str):
+	def get_current_sprite(self, name: str, denomination: str) -> Any:
+		"""Створює об'єкт SpriteSheet із потрібної області"""
 		current_card = SpriteSheet(self.cards_dict.get(name))
-		return current_card.parse_sprite(f'{name}_{denomination}.png')
+		get_sprites = GetSprites(current_card.parse_sprite(f'{name}_{denomination}.png'))
+
+		return get_sprites.creation_sprite(current_card.sprite_map['frames'][f'{name}_{denomination}.png']['frameSize'])

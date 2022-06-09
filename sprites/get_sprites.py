@@ -24,38 +24,15 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from json import load
-from typing import List, Dict, Any
+from typing import Dict, Any
 
 import pygame
 
 
-class SpriteSheet:
-	def __init__(self, sprite_map: List) -> None:
-		"""Клас вирізає певну область на зображенні"""
-		self.__sprite_sheet = pygame.image.load(sprite_map[0]).convert()
+class GetSprites:
+	def __init__(self, image: Any) -> None:
+		self.__image: Any = image
 
-		with open(sprite_map[1]) as file:
-			self.__sprite_map = load(file)
-
-	@property
-	def sprite_sheet(self) -> Any:
-		return self.__sprite_sheet
-
-	@property
-	def sprite_map(self) -> Dict:
-		return self.__sprite_map
-
-	def __get_sprite(self, x: int, y: int, w: int, h: int) -> Any:
-		"""Метод повертає вирізану область"""
-		sprite = pygame.Surface((w, h))
-		sprite.blit(self.sprite_sheet, (0, 0), (x, y, w, h))
-
-		return sprite
-
-	def parse_sprite(self, name) -> Any:
-		"""Метод повертає іменовану область"""
-		sprite = self.sprite_map['frames'][name]['frame']
-		image = self.__get_sprite(sprite["x"], sprite["y"], sprite["w"], sprite["h"])
-
-		return image
+	def creation_sprite(self, size: Dict) -> Any:
+		print(size)
+		return self.__image
