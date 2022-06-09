@@ -46,17 +46,25 @@ class SpriteSheet:
 	def sprite_map(self) -> Dict:
 		return self.__sprite_map
 
-	def __get_sprite(self, x: int, y: int, w: int, h: int) -> Any:
+	def __get_sprite(self, setings: List) -> Any:
 		"""Метод повертає вирізану область"""
-		sprite = pygame.Surface((w, h))
-		# sprite.set_colorkey((0, 0, 0))
-		sprite.blit(self.sprite_sheet, (0, 0), (x, y, w, h))
+		sprite = pygame.Surface((setings[2], setings[3]))
+
+		if setings[4]:
+			sprite.set_colorkey((0, 0, 0))
+
+		sprite.blit(self.sprite_sheet, (0, 0), (setings[0], setings[1], setings[2], setings[3]))
 
 		return sprite
 
 	def parse_sprite(self, name) -> Any:
 		"""Метод повертає іменовану область"""
+		setings_sprite: List = []
+
 		sprite = self.sprite_map['frames'][name]['frame']
-		image = self.__get_sprite(sprite["x"], sprite["y"], sprite["w"], sprite["h"])
+		setings_sprite.extend([sprite["x"], sprite["y"], sprite["w"], sprite["h"]])
+		setings_sprite.append(self.sprite_map['frames'][name]['alfa24'])
+
+		image = self.__get_sprite(setings_sprite)
 
 		return image
