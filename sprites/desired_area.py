@@ -27,7 +27,6 @@ https://www.linkedin.com/in/ihor-cheberiak/
 from typing import Dict, Any
 
 from sprites.spritesheet import SpriteSheet
-from sprites.get_sprites import GetSprites
 
 
 class DesiredArea:
@@ -49,6 +48,5 @@ class DesiredArea:
 	def get_current_sprite(self, name: str, denomination: str) -> Any:
 		"""Створює об'єкт SpriteSheet із потрібної області"""
 		current_card = SpriteSheet(self.cards_dict.get(name))
-		get_sprites = GetSprites(current_card.parse_sprite(f'{name}_{denomination}.png'))
 
-		return get_sprites.creation_sprite(current_card.sprite_map['frames'][f'{name}_{denomination}.png']['frameSize'])
+		return current_card.parse_sprite(f'{name}_{denomination}.png')

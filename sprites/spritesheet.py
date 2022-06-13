@@ -50,10 +50,12 @@ class SpriteSheet:
 		"""Метод повертає вирізану область"""
 		sprite = pygame.Surface((setings[2], setings[3]))
 
-		if setings[4]:
+		if setings[8]:
 			sprite.set_colorkey((0, 0, 0))
 
 		sprite.blit(self.sprite_sheet, (0, 0), (setings[0], setings[1], setings[2], setings[3]))
+		sprite = pygame.transform.scale(sprite, (setings[4], setings[5]))
+		sprite = pygame.transform.rotate(sprite, setings[6])
 
 		return sprite
 
@@ -63,6 +65,13 @@ class SpriteSheet:
 
 		sprite = self.sprite_map['frames'][name]['frame']
 		setings_sprite.extend([sprite["x"], sprite["y"], sprite["w"], sprite["h"]])
+
+		sprite = self.sprite_map['frames'][name]['frameSize']
+		setings_sprite.extend([sprite["w"], sprite["h"]])
+
+		sprite = self.sprite_map['frames'][name]['rotated']
+		setings_sprite.extend([sprite["x"], sprite["y"]])
+
 		setings_sprite.append(self.sprite_map['frames'][name]['alfa24'])
 
 		image = self.__get_sprite(setings_sprite)
