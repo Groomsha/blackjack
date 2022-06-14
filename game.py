@@ -42,15 +42,22 @@ class Game:
 
 	def __init__(self, settings: Dict) -> None:
 		"""Основний файл гри: логіка, гравці"""
+		self.__settings = settings
+
 		pygame.init()
 
 		self.__sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
-		pygame.display.set_caption(f'BlackJack ({settings.get("description")}) {settings.get("version_app")}')
+		pygame.display.set_caption(f'BlackJack ({self.settings.get("description")}) {self.settings.get("version_app")}')
 
 		self.creation_opponents()
 		self.creation_object()
 		self.main_game_loop()
+
+	@property
+	def settings(self) -> Dict:
+		"""Get повертає об'єкт ігрового поля"""
+		return self.__settings
 
 	@property
 	def sc_main(self) -> Any:
@@ -63,10 +70,14 @@ class Game:
 		self.sc_main.blit(sc_table, (0, 0))
 
 		chips = CreationChips(self.sc_main)
-		chips_list: Dict = {'chip_1': {'pos': (975, 625), 'text': ''},
-							'chip_2': {'pos': (1060, 625), 'text': ''},
-							'chip_3': {'pos': (1145, 625), 'text': ''},
-							'chip_4': {'pos': (1230, 625), 'text': ''}
+		chips_list: Dict = {'chip_1': {
+								'pos_c': (975, 625), 'text': self.settings.get("chip_values")[0], 'pos_t': (975, 625)},
+							'chip_2': {
+								'pos_c': (1060, 625), 'text': self.settings.get("chip_values")[1], 'pos_t': (1060, 625)},
+							'chip_3': {
+								'pos_c': (1145, 625), 'text': self.settings.get("chip_values")[2], 'pos_t': (1145, 625)},
+							'chip_4': {
+								'pos_c': (1230, 625), 'text': self.settings.get("chip_values")[3], 'pos_t': (1230, 625)}
 							}
 
 		chips._creation_sprite_to_sc(chips_list)

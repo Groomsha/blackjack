@@ -26,6 +26,8 @@ https://www.linkedin.com/in/ihor-cheberiak/
 
 from typing import Any, Tuple
 
+import pygame
+
 from sprites.desired_area import DesiredArea
 
 
@@ -33,9 +35,10 @@ class CreationBase:
 	"""Базовий клас для виведення ігрових об'єктів"""
 	def __init__(self, sc: Any) -> None:
 		self._sc_main = sc
+		self._sc_text = CreationText(sc)
 		self._sprite_area = DesiredArea()
 
-	def _creation_sprite_to_sc(self, quantity: Tuple):
+	def _creation_sprite_to_sc(self, quantity: Tuple) -> None:
 		"""Створення ігрового об'єкту на полі"""
 		pass
 
@@ -45,6 +48,9 @@ class CreationText:
 	def __init__(self, sc: Any) -> None:
 		self._sc_main = sc
 
-	def _creation_text_to_sc(self):
+	def _creation_text_to_sc(self, options: Tuple) -> Any:
 		"""Створення тексту для ігрового об'єкту на полі"""
-		pass
+		py_text = pygame.font.Font(None, options[1])
+		py_text = py_text.render(options[0], True, options[2])
+
+		return py_text
