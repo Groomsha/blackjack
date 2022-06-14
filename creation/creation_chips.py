@@ -40,13 +40,13 @@ class CreationChips(CreationBase):
 		"""Get повертає Dict з об'єктами фішок"""
 		return self.__chips_dict
 
-	def _creation_sprite_to_sc(self, settings: Dict) -> None:
+	def creation_sprite_to_sc(self, quantity: Dict) -> None:
 		"""Метод створює Dict з об'єктами фішок"""
-		for key, val in settings.items():
+		for key, val in quantity.items():
 			sprite = self._sprite_area.get_current_sprite('chips', 'all')
 
 			options = (val['text'], 36, (180, 0, 0))
 			self.__chips_dict.update({f'{key}': sprite})
 
-			self._sc_main.blit(self.__chips_dict.get(key), val['pos_c'])
-			self._sc_main.blit(self._sc_text._creation_text_to_sc(options), val['pos_t'])
+			self._sc_main.blit(self.chips_dict.get(key), val['pos_c'])
+			self._sc_main.blit(self._sc_text.creation_text_to_sc(options), val['pos_t'])

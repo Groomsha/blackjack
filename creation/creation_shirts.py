@@ -24,33 +24,15 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Any, Tuple, Dict
+from typing import Any, Dict
 
-import pygame
-
-from sprites.desired_area import DesiredArea
+from creation.creation_base import CreationBase
 
 
-class CreationBase:
-	"""Базовий клас для виведення ігрових об'єктів"""
+class CreationShirts(CreationBase):
 	def __init__(self, sc: Any) -> None:
-		self._sc_main = sc
-		self._sc_text = CreationText(sc)
-		self._sprite_area = DesiredArea()
+		super(CreationShirts, self).__init__(sc)
 
 	def creation_sprite_to_sc(self, quantity: Dict) -> None:
-		"""Створення ігрового об'єкту на полі"""
-		pass
-
-
-class CreationText:
-	"""Базовий клас для виведення тексту до ігрових об'єктів"""
-	def __init__(self, sc: Any) -> None:
-		self._sc_main = sc
-
-	def creation_text_to_sc(self, options: Tuple) -> Any:
-		"""Створення тексту для ігрового об'єкту на полі"""
-		py_text = pygame.font.Font(None, options[1])
-		py_text = py_text.render(options[0], True, options[2])
-
-		return py_text
+			sprite = self._sprite_area.get_current_sprite(quantity.get('shirt'), quantity.get('color'))
+			self._sc_main.blit(sprite, quantity.get('pos_c'))

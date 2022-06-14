@@ -31,8 +31,9 @@ import pygame
 from players.player import Player
 from players.dealer import Dealer
 
-from sprites.desired_area import DesiredArea
 from creation.creation_chips import CreationChips
+from creation.creation_cards import CreationCards
+from creation.creation_shirts import CreationShirts
 
 
 class Game:
@@ -78,17 +79,21 @@ class Game:
 								'pos_c': (1145, 625), 'text': self.settings.get("chip_values")[2], 'pos_t': (1145, 625)},
 							'chip_4': {
 								'pos_c': (1230, 625), 'text': self.settings.get("chip_values")[3], 'pos_t': (1230, 625)}
-							}
+		}
 
-		chips._creation_sprite_to_sc(chips_list)
+		chips.creation_sprite_to_sc(chips_list)
 
-		##########TEST##########
-		test = DesiredArea()
+		cards = CreationCards(self.sc_main)
+		cards_list: Dict = {'cards_1': {'suit': 'worms', 'value': 'A', 'pos_c': (20, 500)},
+							'cards_2': {'suit': 'peaks', 'value': '5', 'pos_c': (700, 500)},
+							'cards_3': {'suit': 'peaks', 'value': '9', 'pos_c': (340, 500)}
+		}
 
-		self.sc_main.blit(test.get_current_sprite('worms', 'V'), (20, 500))
-		self.sc_main.blit(test.get_current_sprite('peaks', '5'), (700, 500))
-		self.sc_main.blit(test.get_current_sprite('peaks', '3'), (340, 500))
-		########################
+		cards.creation_sprite_to_sc(cards_list)
+
+		shirts = CreationShirts(self.sc_main)
+		shirts.creation_sprite_to_sc({'shirt': 'shirts', 'color': 'red', 'pos_c': (500, 500)})
+		shirts.creation_sprite_to_sc({'shirt': 'shirts', 'color': 'blue', 'pos_c': (900, 500)})
 
 		pygame.display.update()
 
