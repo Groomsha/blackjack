@@ -25,35 +25,27 @@ https://www.linkedin.com/in/ihor-cheberiak/
 """
 
 from json import load
-from typing import List, Dict, Any
+from typing import List, Any
 
 import pygame
 
 
 class SpriteSheet:
 	def __init__(self, sprite_map: List) -> None:
-		"""Клас вирізає певну область на зображенні"""
+		"""Клас вирізає певну область на зображенні, і повертається із зазначеними параметрами в json """
 		self.__sprite_sheet = pygame.image.load(sprite_map[0]).convert()
 
 		with open(sprite_map[1]) as file:
 			self.__sprite_map = load(file)
 
-	@property
-	def sprite_sheet(self) -> Any:
-		return self.__sprite_sheet
-
-	@property
-	def sprite_map(self) -> Dict:
-		return self.__sprite_map
-
 	def __get_sprite(self, setings: List) -> Any:
-		"""Метод повертає вирізану область"""
+		"""Метод повертає вирізану область із зазначеними параметрами"""
 		sprite = pygame.Surface((setings[2], setings[3]))
 
 		if setings[8]:
 			sprite.set_colorkey((0, 0, 0))
 
-		sprite.blit(self.sprite_sheet, (0, 0), (setings[0], setings[1], setings[2], setings[3]))
+		sprite.blit(self.__sprite_sheet, (0, 0), (setings[0], setings[1], setings[2], setings[3]))
 		sprite = pygame.transform.scale(sprite, (setings[4], setings[5]))
 		sprite = pygame.transform.rotate(sprite, setings[6])
 
@@ -63,16 +55,16 @@ class SpriteSheet:
 		"""Метод повертає іменовану область"""
 		setings_sprite: List = []
 
-		sprite = self.sprite_map['frames'][name]['frame']
+		sprite = self.__sprite_map['frames'][name]['frame']
 		setings_sprite.extend([sprite["x"], sprite["y"], sprite["w"], sprite["h"]])
 
-		sprite = self.sprite_map['frames'][name]['frameSize']
+		sprite = self.__sprite_map['frames'][name]['frameSize']
 		setings_sprite.extend([sprite["w"], sprite["h"]])
 
-		sprite = self.sprite_map['frames'][name]['rotated']
+		sprite = self.__sprite_map['frames'][name]['rotated']
 		setings_sprite.extend([sprite["x"], sprite["y"]])
 
-		setings_sprite.append(self.sprite_map['frames'][name]['alfa24'])
+		setings_sprite.append(self.__sprite_map['frames'][name]['alfa24'])
 
 		image = self.__get_sprite(setings_sprite)
 

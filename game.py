@@ -24,13 +24,15 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict
+from typing import Dict, Any
 
 import pygame
 
 from players.player import Player
 from players.dealer import Dealer
+
 from sprites.desired_area import DesiredArea
+from creation.creation_chips import CreationChips
 
 
 class Game:
@@ -42,41 +44,52 @@ class Game:
 		"""Основний файл гри: логіка, гравці"""
 		pygame.init()
 
-		sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+		self.__sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
 		pygame.display.set_caption(f'BlackJack ({settings.get("description")}) {settings.get("version_app")}')
 
+		self.creation_opponents()
+		self.creation_object()
+		self.main_game_loop()
+
+	@property
+	def sc_main(self) -> Any:
+		"""Get повертає об'єкт ігрового поля"""
+		return self.__sc_main
+
+	def creation_object(self):
+		"""Метод створює об'єкти гри"""
 		sc_table = pygame.image.load('images/blackjack-table.png').convert()
-		sc_main.blit(sc_table, (0, 0))
+		self.sc_main.blit(sc_table, (0, 0))
 
-		####################
-		self.test = DesiredArea()
+		chips = CreationChips(self.sc_main)
+		chips_list: Dict = {'chip_1': {'pos': (975, 625), 'text': ''},
+							'chip_2': {'pos': (1060, 625), 'text': ''},
+							'chip_3': {'pos': (1145, 625), 'text': ''},
+							'chip_4': {'pos': (1230, 625), 'text': ''}
+							}
 
-		sc_main.blit(self.test.get_current_sprite('worms', 'V'), (20, 500))
-		sc_main.blit(self.test.get_current_sprite('peaks', '5'), (700, 500))
-		sc_main.blit(self.test.get_current_sprite('peaks', '3'), (340, 500))
-		sc_main.blit(self.test.get_current_sprite('chips', 'all'), (1048, 625))
-		# sc_main.blit(self.test.get_current_sprite('peaks', '5'), (650, 100))
-		# sc_main.blit(self.test.get_current_sprite('peaks', '6'), (20, 100))
-		# sc_main.blit(self.test.get_current_sprite('peaks', '7'), (180, 100))
-		# sc_main.blit(self.test.get_current_sprite('peaks', '8'), (340, 100))
-		# sc_main.blit(self.test.get_current_sprite('peaks', '9'), (495, 100))
-		# sc_main.blit(self.test.get_current_sprite('peaks', '10'), (650, 100))
-		# sc_main.blit(self.test.get_current_sprite('peaks', 'V'), (20, 100))
-		# sc_main.blit(self.test.get_current_sprite('peaks', 'D'), (180, 100))
-		# sc_main.blit(self.test.get_current_sprite('peaks', 'K'), (340, 100))
-		####################
+		chips._creation_sprite_to_sc(chips_list)
+
+		##########TEST##########
+		test = DesiredArea()
+
+		self.sc_main.blit(test.get_current_sprite('worms', 'V'), (20, 500))
+		self.sc_main.blit(test.get_current_sprite('peaks', '5'), (700, 500))
+		self.sc_main.blit(test.get_current_sprite('peaks', '3'), (340, 500))
+		########################
 
 		pygame.display.update()
-		self.clock = pygame.time.Clock()
 
+	def creation_opponents(self) -> None:
+		"""Метод створює опонентів гри"""
 		self.player = Player()
 		self.dealer = Dealer()
 
-		self.main_game_loop()
-
 	def main_game_loop(self) -> None:
 		"""Основний цикл гри"""
+		clock = pygame.time.Clock()
+
 		while True:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -84,4 +97,4 @@ class Game:
 				elif event.type == pygame.MOUSEBUTTONDOWN:
 					pass
 
-			self.clock.tick(self.FPS)
+			clock.tick(self.FPS)

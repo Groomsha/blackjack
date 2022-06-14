@@ -33,16 +33,17 @@ class DesiredArea:
 	def __init__(self) -> None:
 		"""Клас вибирає потрібну область на зображенні"""
 		self.__cards_dict: Dict = {
-			'clubs': ['images/blackjack-cards.png', 'images/cards_clubs.json'],
-			'timbrel': ['images/blackjack-cards.png', 'images/cards_timbrel.json'],
-			'worms': ['images/blackjack-cards.png', 'images/cards_worms.json'],
-			'peaks': ['images/blackjack-cards.png', 'images/cards_peaks.json'],
-			'shirts': ['images/blackjack-shirt.png', 'images/cards_shirts.json'],
-			'chips': ['images/blackjack-chips.png', 'images/cards_chips.json']
+			'clubs': ['images/blackjack-cards.png', 'json_imag/cards_clubs.json'],
+			'timbrel': ['images/blackjack-cards.png', 'json_imag/cards_timbrel.json'],
+			'worms': ['images/blackjack-cards.png', 'json_imag/cards_worms.json'],
+			'peaks': ['images/blackjack-cards.png', 'json_imag/cards_peaks.json'],
+			'shirts': ['images/blackjack-shirt.png', 'json_imag/cards_shirts.json'],
+			'chips': ['images/blackjack-chips.png', 'json_imag/cards_chips.json']
 		}
 
 	@property
 	def cards_dict(self) -> Dict:
+		"""Get повертає Dict з посиланнями на ігрові об'єкти (images, json)"""
 		return self.__cards_dict
 
 	def get_current_sprite(self, name: str, denomination: str) -> Any:
