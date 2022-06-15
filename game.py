@@ -34,6 +34,7 @@ from players.dealer import Dealer
 from creation.creation_chips import CreationChips
 from creation.creation_cards import CreationCards
 from creation.creation_shirts import CreationShirts
+from sources.creation_deck import CreationDeck
 
 
 class Game:
@@ -50,6 +51,9 @@ class Game:
 		self.__sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
 		pygame.display.set_caption(f'BlackJack ({self.settings.get("description")}) {self.settings.get("version_app")}')
+
+		self.deck = CreationDeck()	#колода
+		self.deck.update_shuffled()
 
 		self.creation_opponents()
 		self.creation_object()
