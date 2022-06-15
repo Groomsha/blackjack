@@ -32,9 +32,6 @@ from players.player import Player
 from players.dealer import Dealer
 
 from creation.creation_chips import CreationChips
-from creation.creation_cards import CreationCards
-from creation.creation_shirts import CreationShirts
-from sources.creation_deck import CreationDeck
 
 
 class Game:
@@ -45,50 +42,36 @@ class Game:
 	def __init__(self, settings: Dict) -> None:
 		"""Основний файл гри: логіка, гравці"""
 		self.__settings = settings
+		self.__game_chips: Any = ''
+		self.__player: Any = ''
+		self.__dealer: Any = ''
 
 		pygame.init()
 
 		self.__sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
 		pygame.display.set_caption(f'BlackJack ({self.__settings.get("description")}) '
-								   f'{self.__settings.get("version_app")}')
+								f''f'{self.__settings.get("version_app")}')
 
+		self.__creation_object()
+		self.__creation_opponents()
+
+		pygame.display.update()
+		self.__main_game_loop()
+
+	def __creation_object(self):
+		"""Метод створює об'єкти на ігровому полі"""
 		sc_table = pygame.image.load('images/blackjack-table.png').convert()
 		self.__sc_main.blit(sc_table, (0, 0))
 
-		self.game_chips = GameCreationChips(self.__sc_main, self.__settings)
+		self.__game_chips = GameCreationChips(self.__sc_main, self.__settings)
 
-		self.deck = CreationDeck()	#колода
-		self.deck.update_shuffled()
-
-		self.creation_opponents()
-		self.creation_object()
-		self.main_game_loop()
-
-	def creation_object(self):
-		"""Метод створює об'єкти гри"""
-		cards = CreationCards()
-		card_sprite = cards.return_sprite_to_sc({'suit': 'worms', 'value': 'A', 'pos_c': (20, 500)})
-		self.__sc_main.blit(card_sprite[0], card_sprite[1])
-		card_sprite = cards.return_sprite_to_sc({'suit': 'peaks', 'value': '5', 'pos_c': (700, 500)})
-		self.__sc_main.blit(card_sprite[0], card_sprite[1])
-		card_sprite = cards.return_sprite_to_sc({'suit': 'peaks', 'value': '9', 'pos_c': (340, 500)})
-		self.__sc_main.blit(card_sprite[0], card_sprite[1])
-
-		shirts = CreationShirts()
-		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': 'red', 'pos_c': (500, 500)})
-		self.__sc_main.blit(shirts_sprite[0], shirts_sprite[1])
-		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': 'blue', 'pos_c': (900, 500)})
-		self.__sc_main.blit(shirts_sprite[0], shirts_sprite[1])
-
-		pygame.display.update()
-
-	def creation_opponents(self) -> None:
+	def __creation_opponents(self) -> None:
 		"""Метод створює опонентів гри"""
-		self.player = Player(self.__sc_main, self.__settings)
-		self.dealer = Dealer(self.__sc_main, self.__settings)
+		self.__player = Player(self.__sc_main, self.__settings)
+		self.__dealer = Dealer(self.__sc_main, self.__settings)
 
-	def main_game_loop(self) -> None:
+	def __main_game_loop(self) -> None:
 		"""Основний цикл гри"""
 		clock = pygame.time.Clock()
 
@@ -104,6 +87,7 @@ class Game:
 
 class GameCreationChips:
 	def __init__(self, sc: Any, settings: Dict) -> None:
+		"""Клас створює та відображає фішки на ігровому полі"""
 		__chips = CreationChips()
 		__meaning_temp: Any = ''
 		__counter: int = 0

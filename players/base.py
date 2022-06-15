@@ -45,6 +45,10 @@ class Base:
 		"""Get повертає об'єкт ігрового поля"""
 		return self.__sc_main
 
+	def _creation_object(self) -> None:
+		"""Метод створює об'єкти гри"""
+		pass
+
 	def _creation_text(self, options: Tuple) -> Any:
 		"""Створення тексту гравців"""
 		py_text = pygame.font.Font(None, options[1])

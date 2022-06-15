@@ -27,9 +27,33 @@ https://www.linkedin.com/in/ihor-cheberiak/
 from typing import Dict, Any
 
 from players.base import Base
+from sources.creation_deck import CreationDeck
+from creation.creation_cards import CreationCards
+from creation.creation_shirts import CreationShirts
 
 
 class Dealer(Base):
 	def __init__(self, sc: Any, settings: Dict) -> None:
 		"""Клас для логіки дилера"""
 		super(Dealer, self).__init__(sc, settings)
+
+		self.deck = CreationDeck()
+		self.deck.update_shuffled()
+
+		self._creation_object()
+
+	def _creation_object(self) -> None:
+		"""Метод створює об'єкти гри"""
+		cards = CreationCards()
+		card_sprite = cards.return_sprite_to_sc({'suit': 'worms', 'value': 'A', 'pos_c': (20, 500)})
+		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		card_sprite = cards.return_sprite_to_sc({'suit': 'peaks', 'value': '5', 'pos_c': (700, 500)})
+		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		card_sprite = cards.return_sprite_to_sc({'suit': 'peaks', 'value': '9', 'pos_c': (340, 500)})
+		self.sc_main.blit(card_sprite[0], card_sprite[1])
+
+		shirts = CreationShirts()
+		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': 'red', 'pos_c': (500, 500)})
+		self.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
+		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': 'blue', 'pos_c': (900, 500)})
+		self.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
