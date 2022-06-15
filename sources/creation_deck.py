@@ -36,7 +36,7 @@ class CreationDeck:
 		self.__values: List = ['2','3','4','5','6','7','8','9','10','V','D','K','A']
 
 	@property
-	def shuffled_deck(self):
+	def shuffled_deck(self) -> Tuple:
 		"""Get повертає Tuple з восьмі тасованих колод"""
 		return self.__shuffled_deck
 
@@ -50,7 +50,8 @@ class CreationDeck:
 
 		return one_deck
 
-	def update_shuffled(self):
+	def update_shuffled(self) -> None:
+		"""Метод створює колоду і тосує її"""
 		temp_deck: Tuple = tuple()
 
 		for x in range(1, 9):
