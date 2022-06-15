@@ -24,14 +24,15 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Any, Dict, Tuple
+from typing import Dict, Tuple
+
 from creation.creation_base import CreationBase
 
 
 class CreationCards(CreationBase):
-	def __init__(self, sc: Any) -> None:
+	def __init__(self) -> None:
 		"""Клас створює карти у грі"""
-		super(CreationCards, self).__init__(sc)
+		super(CreationCards, self).__init__()
 		self.__cards_dict: Dict = {}
 
 	@property
@@ -39,10 +40,17 @@ class CreationCards(CreationBase):
 		"""Get повертає Dict з об'єктами карт"""
 		return self.__cards_dict
 
-	def creation_sprite_to_sc(self, quantity: Dict) -> None:
-		for key, val in quantity.items():
-			sprite = self._sprite_area.get_current_sprite(val['suit'], val['value'])
+	def _creation_sprite_to_sc(self, quantity: Dict) -> Tuple:
+		"""Метод створює Dict з об'єктом карти та повертає Tuple об'єкта"""
+		sprite = self._sprite_area.get_current_sprite(quantity['suit'], quantity['value'])
 
-			self.__cards_dict.update({f'{val["suit"]}_{val["value"]}': sprite})
+		self.__cards_dict.update({f'{quantity["suit"]}_{quantity["value"]}': sprite})
+		self._sprite_tuple = ((self.__cards_dict.get(f'{quantity["suit"]}_{quantity["value"]}'), quantity['pos_c']))
 
-			self._sc_main.blit(self.cards_dict.get(f'{val["suit"]}_{val["value"]}'), val['pos_c'])
+		return self._sprite_tuple
+
+	def return_sprite_to_sc(self, quantity: Dict) -> Tuple:
+		"""Метод повертає Tuple з об'єктом карти"""
+		sprite: Tuple = self._creation_sprite_to_sc(quantity)
+
+		return sprite

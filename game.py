@@ -70,7 +70,7 @@ class Game:
 		sc_table = pygame.image.load('images/blackjack-table.png').convert()
 		self.sc_main.blit(sc_table, (0, 0))
 
-		chips = CreationChips(self.sc_main)
+		chips = CreationChips()
 		chips_list: Dict = {'chip_1': {
 								'pos_c': (975, 625), 'text': self.settings.get("chip_values")[0], 'pos_t': (975, 625)},
 							'chip_2': {
@@ -81,19 +81,28 @@ class Game:
 								'pos_c': (1230, 625), 'text': self.settings.get("chip_values")[3], 'pos_t': (1230, 625)}
 		}
 
-		chips.creation_sprite_to_sc(chips_list)
+		test: int = 0
+		test1 = ''
+		for sprite in chips.return_sprite_to_sc(chips_list):
+			if test % 2 == 0:
+				test1 = sprite
+			else:
+				self.sc_main.blit(test1, sprite)
+			test += 1
 
-		cards = CreationCards(self.sc_main)
-		cards_list: Dict = {'cards_1': {'suit': 'worms', 'value': 'A', 'pos_c': (20, 500)},
-							'cards_2': {'suit': 'peaks', 'value': '5', 'pos_c': (700, 500)},
-							'cards_3': {'suit': 'peaks', 'value': '9', 'pos_c': (340, 500)}
-		}
+		cards = CreationCards()
+		card_sprite = cards.return_sprite_to_sc({'suit': 'worms', 'value': 'A', 'pos_c': (20, 500)})
+		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		card_sprite = cards.return_sprite_to_sc({'suit': 'peaks', 'value': '5', 'pos_c': (700, 500)})
+		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		card_sprite = cards.return_sprite_to_sc({'suit': 'peaks', 'value': '9', 'pos_c': (340, 500)})
+		self.sc_main.blit(card_sprite[0], card_sprite[1])
 
-		cards.creation_sprite_to_sc(cards_list)
-
-		shirts = CreationShirts(self.sc_main)
-		shirts.creation_sprite_to_sc({'shirt': 'shirts', 'color': 'red', 'pos_c': (500, 500)})
-		shirts.creation_sprite_to_sc({'shirt': 'shirts', 'color': 'blue', 'pos_c': (900, 500)})
+		shirts = CreationShirts()
+		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': 'red', 'pos_c': (500, 500)})
+		self.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
+		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': 'blue', 'pos_c': (900, 500)})
+		self.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
 
 		pygame.display.update()
 

@@ -33,22 +33,27 @@ from sprites.desired_area import DesiredArea
 
 class CreationBase:
 	"""Базовий клас для виведення ігрових об'єктів"""
-	def __init__(self, sc: Any) -> None:
-		self._sc_main = sc
-		self._sc_text = CreationText(sc)
+	def __init__(self) -> None:
+		self._sprite_tuple: Tuple = ()
+
+		self._sc_text = CreationText()
 		self._sprite_area = DesiredArea()
 
-	def creation_sprite_to_sc(self, quantity: Dict) -> None:
+	def _creation_sprite_to_sc(self, quantity: Dict) -> None:
 		"""Створення ігрового об'єкту на полі"""
+		pass
+
+	def return_sprite_to_sc(self, quantity: Dict) -> Tuple:
+		"""Повертає ігровий об'єкт на поле"""
 		pass
 
 
 class CreationText:
 	"""Базовий клас для виведення тексту до ігрових об'єктів"""
-	def __init__(self, sc: Any) -> None:
-		self._sc_main = sc
+	def __init__(self) -> None:
+		pass
 
-	def creation_text_to_sc(self, options: Tuple) -> Any:
+	def _creation_text_to_sc(self, options: Tuple) -> Any:
 		"""Створення тексту для ігрового об'єкту на полі"""
 		py_text = pygame.font.Font(None, options[1])
 		py_text = py_text.render(options[0], True, options[2])

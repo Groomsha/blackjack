@@ -24,15 +24,25 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Any, Dict
+from typing import Dict, Tuple
 
 from creation.creation_base import CreationBase
 
 
 class CreationShirts(CreationBase):
-	def __init__(self, sc: Any) -> None:
-		super(CreationShirts, self).__init__(sc)
+	def __init__(self) -> None:
+		"""Клас створює сорочки у грі"""
+		super(CreationShirts, self).__init__()
 
-	def creation_sprite_to_sc(self, quantity: Dict) -> None:
-			sprite = self._sprite_area.get_current_sprite(quantity.get('shirt'), quantity.get('color'))
-			self._sc_main.blit(sprite, quantity.get('pos_c'))
+	def _creation_sprite_to_sc(self, quantity: Dict) -> Tuple:
+		"""Метод створює Dict з об'єктом сорочка та повертає Tuple з об'єктом"""
+		sprite = self._sprite_area.get_current_sprite(quantity.get('shirt'), quantity.get('color'))
+		self._sprite_tuple = (sprite, quantity.get('pos_c'))
+
+		return self._sprite_tuple
+
+	def return_sprite_to_sc(self, quantity: Dict) -> Tuple:
+		"""Метод повертає Tuple з об'єктом сорочка"""
+		sprite: Tuple = self._creation_sprite_to_sc(quantity)
+
+		return sprite
