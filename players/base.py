@@ -24,8 +24,30 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
+from typing import Dict, Any, Tuple
+
+import pygame
+
 
 class Base:
-	def __init__(self) -> None:
+	def __init__(self, sc: Any, settings: Dict) -> None:
 		"""Базовий клас для логіки гравців"""
-		pass
+		self.__sc_main = sc
+		self.__settings = settings
+
+	@property
+	def settings(self) -> Dict:
+		"""Get повертає налаштування ігрового поля"""
+		return self.__settings
+
+	@property
+	def sc_main(self) -> Any:
+		"""Get повертає об'єкт ігрового поля"""
+		return self.__sc_main
+
+	def _creation_text(self, options: Tuple) -> Any:
+		"""Створення тексту гравців"""
+		py_text = pygame.font.Font(None, options[1])
+		py_text = py_text.render(options[0], True, options[2])
+
+		return py_text

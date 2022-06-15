@@ -24,11 +24,12 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
+from typing import Dict, Any
+
 from players.base import Base
 
 
 class Player(Base):
-	def __init__(self) -> None:
+	def __init__(self, sc: Any, settings: Dict) -> None:
 		"""Клас для логіки гравця"""
-		super(Player, self).__init__()
-
+		super(Player, self).__init__(sc, settings)

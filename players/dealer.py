@@ -24,11 +24,12 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
+from typing import Dict, Any
+
 from players.base import Base
 
 
 class Dealer(Base):
-	def __init__(self) -> None:
+	def __init__(self, sc: Any, settings: Dict) -> None:
 		"""Клас для логіки дилера"""
-		super(Dealer, self).__init__()
-
+		super(Dealer, self).__init__(sc, settings)

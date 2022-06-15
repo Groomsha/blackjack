@@ -50,7 +50,13 @@ class Game:
 
 		self.__sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
-		pygame.display.set_caption(f'BlackJack ({self.settings.get("description")}) {self.settings.get("version_app")}')
+		pygame.display.set_caption(f'BlackJack ({self.__settings.get("description")}) '
+								   f'{self.__settings.get("version_app")}')
+
+		sc_table = pygame.image.load('images/blackjack-table.png').convert()
+		self.__sc_main.blit(sc_table, (0, 0))
+
+		self.game_chips = GameCreationChips(self.__sc_main, self.__settings)
 
 		self.deck = CreationDeck()	#колода
 		self.deck.update_shuffled()
@@ -59,61 +65,28 @@ class Game:
 		self.creation_object()
 		self.main_game_loop()
 
-	@property
-	def settings(self) -> Dict:
-		"""Get повертає об'єкт ігрового поля"""
-		return self.__settings
-
-	@property
-	def sc_main(self) -> Any:
-		"""Get повертає об'єкт ігрового поля"""
-		return self.__sc_main
-
 	def creation_object(self):
 		"""Метод створює об'єкти гри"""
-		sc_table = pygame.image.load('images/blackjack-table.png').convert()
-		self.sc_main.blit(sc_table, (0, 0))
-
-		chips = CreationChips()
-		chips_list: Dict = {'chip_1': {
-								'pos_c': (975, 625), 'text': self.settings.get("chip_values")[0], 'pos_t': (975, 625)},
-							'chip_2': {
-								'pos_c': (1060, 625), 'text': self.settings.get("chip_values")[1], 'pos_t': (1060, 625)},
-							'chip_3': {
-								'pos_c': (1145, 625), 'text': self.settings.get("chip_values")[2], 'pos_t': (1145, 625)},
-							'chip_4': {
-								'pos_c': (1230, 625), 'text': self.settings.get("chip_values")[3], 'pos_t': (1230, 625)}
-		}
-
-		test: int = 0
-		test1 = ''
-		for sprite in chips.return_sprite_to_sc(chips_list):
-			if test % 2 == 0:
-				test1 = sprite
-			else:
-				self.sc_main.blit(test1, sprite)
-			test += 1
-
 		cards = CreationCards()
 		card_sprite = cards.return_sprite_to_sc({'suit': 'worms', 'value': 'A', 'pos_c': (20, 500)})
-		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		self.__sc_main.blit(card_sprite[0], card_sprite[1])
 		card_sprite = cards.return_sprite_to_sc({'suit': 'peaks', 'value': '5', 'pos_c': (700, 500)})
-		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		self.__sc_main.blit(card_sprite[0], card_sprite[1])
 		card_sprite = cards.return_sprite_to_sc({'suit': 'peaks', 'value': '9', 'pos_c': (340, 500)})
-		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		self.__sc_main.blit(card_sprite[0], card_sprite[1])
 
 		shirts = CreationShirts()
 		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': 'red', 'pos_c': (500, 500)})
-		self.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
+		self.__sc_main.blit(shirts_sprite[0], shirts_sprite[1])
 		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': 'blue', 'pos_c': (900, 500)})
-		self.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
+		self.__sc_main.blit(shirts_sprite[0], shirts_sprite[1])
 
 		pygame.display.update()
 
 	def creation_opponents(self) -> None:
 		"""Метод створює опонентів гри"""
-		self.player = Player()
-		self.dealer = Dealer()
+		self.player = Player(self.__sc_main, self.__settings)
+		self.dealer = Dealer(self.__sc_main, self.__settings)
 
 	def main_game_loop(self) -> None:
 		"""Основний цикл гри"""
@@ -127,3 +100,27 @@ class Game:
 					pass
 
 			clock.tick(self.FPS)
+
+
+class GameCreationChips:
+	def __init__(self, sc: Any, settings: Dict) -> None:
+		__chips = CreationChips()
+		__meaning_temp: Any = ''
+		__counter: int = 0
+
+		__chips_list: Dict = {'chip_1': {
+								'pos_c': (975, 625), 'text': settings.get("chip_values")[0], 'pos_t': (975, 625)},
+							'chip_2': {
+								'pos_c': (1060, 625), 'text': settings.get("chip_values")[1], 'pos_t': (1060, 625)},
+							'chip_3': {
+								'pos_c': (1145, 625), 'text': settings.get("chip_values")[2], 'pos_t': (1145, 625)},
+							'chip_4': {
+								'pos_c': (1230, 625), 'text': settings.get("chip_values")[3], 'pos_t': (1230, 625)}
+		}
+
+		for meaning in __chips.return_sprite_to_sc(__chips_list):
+			if __counter % 2 == 0:
+				__meaning_temp = meaning
+			else:
+				sc.blit(__meaning_temp, meaning)
+			__counter += 1
