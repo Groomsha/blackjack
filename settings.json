@@ -1,5 +1,5 @@
 {
   "description": "CyberBionic Systematics",
-  "chip_values": ["10", "50", "100", "500"],
+  "chip_values": ["X", "25", "50", "100"],
   "game_amount": "1000"
 }

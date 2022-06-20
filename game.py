@@ -83,7 +83,9 @@ class Game:
 				elif event.type == pygame.MOUSEBUTTONDOWN:
 					x, y = pygame.mouse.get_pos()
 
-					chip = self.__game_chips._mouse_event_click(x, y)
+					if not self.__player.start_game:
+						chip = self.__game_chips._mouse_event_click(x, y)
+						print(chip)
 
 			clock.tick(self.FPS)
 
@@ -96,11 +98,11 @@ class GameCreationChips:
 		__counter: int = 0
 
 		__chips_dict: Dict = {'chip_1': {
-								'pos_c': (975, 625), 'text': settings.get("chip_values")[0], 'pos_t': (1005, 675)},
+								'pos_c': (975, 625), 'text': settings.get("chip_values")[0], 'pos_t': (1010, 675)},
 							'chip_2': {
 								'pos_c': (1060, 625), 'text': settings.get("chip_values")[1], 'pos_t': (1090, 675)},
 							'chip_3': {
-								'pos_c': (1145, 625), 'text': settings.get("chip_values")[2], 'pos_t': (1170, 675)},
+								'pos_c': (1145, 625), 'text': settings.get("chip_values")[2], 'pos_t': (1175, 675)},
 							'chip_4': {
 								'pos_c': (1230, 625), 'text': settings.get("chip_values")[3], 'pos_t': (1255, 675)}
 		}
@@ -113,12 +115,12 @@ class GameCreationChips:
 			__counter += 1
 
 	@staticmethod
-	def _mouse_event_click(mouse_x: int, mouse_y: int) -> str:
+	def _mouse_event_click(mouse_x: int, mouse_y: int) -> int:
 		if 975 <= mouse_x <= 1055 and 655 <= mouse_y <= 725:
-			return '10'
+			return -1
 		elif 1065 <= mouse_x <= 1145 and 655 <= mouse_y <= 725:
-			return '50'
+			return 25
 		elif 1155 <= mouse_x <= 1235 and 655 <= mouse_y <= 725:
-			return '100'
+			return 50
 		elif 1245 <= mouse_x <= 1560 and 655 <= mouse_y <= 725:
-			return '500'
+			return 100

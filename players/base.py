@@ -35,12 +35,8 @@ class Base:
 	def __init__(self, sc: pygame, settings: Dict[str, str]) -> None:
 		"""Базовий клас для логіки гравців"""
 		self.__sc_main: pygame = sc
+		self.__start_game: bool = False
 		self.__settings: Dict[str, str] = settings
-		self.__cash: pygame.Surface = self._creation_text(('0', 36, (255, 255, 255)))
-		self.__total: pygame.Surface = self._creation_text((self.__settings['game_amount'], 36, (255, 255, 255)))
-
-		self.__sc_main.blit(self.__cash, (355, 738))
-		self.__sc_main.blit(self.__total, (1065, 738))
 
 		self._shirts_color: str = 'red' if random.randint(0, 1) else 'blue'
 
@@ -53,6 +49,14 @@ class Base:
 	def sc_main(self) -> pygame:
 		"""Get повертає об'єкт ігрового поля"""
 		return self.__sc_main
+
+	@property
+	def start_game(self) -> bool:
+		return self.__start_game
+
+	@start_game.setter
+	def start_game(self, val: bool) -> None:
+		self.__start_game = val
 
 	def _creation_object(self) -> None:
 		"""Метод створює об'єкти гри"""

@@ -35,3 +35,9 @@ class Player(Base):
 	def __init__(self, sc: pygame, settings: Dict[str, str]) -> None:
 		"""Клас для логіки гравця"""
 		super(Player, self).__init__(sc, settings)
+
+		self.__cash: pygame.Surface = self._creation_text(('0', 36, (255, 255, 255)))
+		self.__total: pygame.Surface = self._creation_text((self.settings['game_amount'], 36, (255, 255, 255)))
+
+		self.sc_main.blit(self.__cash, (355, 738))
+		self.sc_main.blit(self.__total, (1065, 738))
