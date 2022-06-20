@@ -24,7 +24,9 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Any
+
+import pygame
 
 from creation.creation_base import CreationBase
 
@@ -33,19 +35,19 @@ class CreationChips(CreationBase):
 	def __init__(self) -> None:
 		"""Клас створює фішки у грі"""
 		super(CreationChips, self).__init__()
-		self.__chips_dict: Dict = {}
+		self.__chips_dict: [str, pygame.Surface] = {}
 
 	@property
-	def chips_dict(self) -> Dict:
+	def chips_dict(self) -> Dict[str, pygame.Surface]:
 		"""Get повертає Dict з об'єктами фішок"""
 		return self.__chips_dict
 
-	def _creation_sprite_to_sc(self, quantity: Dict) -> Tuple:
+	def _creation_sprite_to_sc(self, quantity: Dict[str, Dict[str, Any]]) -> Tuple[pygame.Surface, Tuple[int, int]]:
 		"""Метод створює Dict з об'єктами фішокта повертає Tuple з ними"""
 		for key, val in quantity.items():
 			sprite = self._sprite_area.get_current_sprite('chips', 'all')
 
-			options = (val['text'], 36, (180, 0, 0))
+			options: Tuple = (val['text'], 36, (180, 0, 0))
 			self.__chips_dict.update({f'{key}': sprite})
 
 			self._sprite_tuple += ((self.chips_dict.get(key), val['pos_c']))
@@ -53,7 +55,7 @@ class CreationChips(CreationBase):
 
 		return self._sprite_tuple
 
-	def return_sprite_to_sc(self, quantity: Dict) -> Tuple:
+	def return_sprite_to_sc(self, quantity: Dict[str, Dict[str, Any]]) -> Tuple[pygame.Surface, Tuple[int, int]]:
 		"""Метод повертає Tuple з об'єктами фішок та текстом"""
 		sprite_and_text: Tuple = self._creation_sprite_to_sc(quantity)
 

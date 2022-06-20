@@ -24,7 +24,7 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Any
+from typing import Dict
 
 import pygame
 
@@ -39,12 +39,13 @@ class Game:
 	WIDTH: int = 1357
 	HEIGHT: int = 765
 
-	def __init__(self, settings: Dict) -> None:
+	def __init__(self, settings: Dict[str, str]) -> None:
 		"""Основний файл гри: логіка, гравці"""
-		self.__settings = settings
-		self.__game_chips: Any = ''
-		self.__player: Any = ''
-		self.__dealer: Any = ''
+		self.__settings: Dict[str, str] = settings
+		self.__game_chips: GameCreationChips = None
+		self.__sc_main: pygame = None
+		self.__player: Player = None
+		self.__dealer: Dealer = None
 
 		pygame.init()
 
@@ -59,9 +60,9 @@ class Game:
 		pygame.display.update()
 		self.__main_game_loop()
 
-	def __creation_object(self):
+	def __creation_object(self) -> None:
 		"""Метод створює об'єкти на ігровому полі"""
-		sc_table = pygame.image.load('images/blackjack-table.png').convert()
+		sc_table: pygame.Surface = pygame.image.load('images/blackjack-table.png').convert()
 		self.__sc_main.blit(sc_table, (0, 0))
 
 		self.__game_chips = GameCreationChips(self.__sc_main, self.__settings)
@@ -73,7 +74,7 @@ class Game:
 
 	def __main_game_loop(self) -> None:
 		"""Основний цикл гри"""
-		clock = pygame.time.Clock()
+		clock: pygame = pygame.time.Clock()
 
 		while True:
 			for event in pygame.event.get():
@@ -86,10 +87,10 @@ class Game:
 
 
 class GameCreationChips:
-	def __init__(self, sc: Any, settings: Dict) -> None:
+	def __init__(self, sc: pygame, settings: Dict) -> None:
 		"""Клас створює та відображає фішки на ігровому полі"""
+		__meaning_temp: pygame.Surface = None
 		__chips = CreationChips()
-		__meaning_temp: Any = ''
 		__counter: int = 0
 
 		__chips_list: Dict = {'chip_1': {

@@ -24,7 +24,9 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Any
+from typing import Dict, List
+
+import pygame
 
 from sprites.spritesheet import SpriteSheet
 
@@ -32,21 +34,21 @@ from sprites.spritesheet import SpriteSheet
 class DesiredArea:
 	def __init__(self) -> None:
 		"""Клас вибирає потрібну область на зображенні"""
-		self.__cards_dict: Dict = {
+		self.__cards_dict: Dict[str, List[str]] = {
 			'clubs': ['images/blackjack-cards.png', 'json_imag/cards_clubs.json'],
 			'timbrel': ['images/blackjack-cards.png', 'json_imag/cards_timbrel.json'],
 			'worms': ['images/blackjack-cards.png', 'json_imag/cards_worms.json'],
 			'peaks': ['images/blackjack-cards.png', 'json_imag/cards_peaks.json'],
 			'shirts': ['images/blackjack-shirt.png', 'json_imag/cards_shirts.json'],
-			'chips': ['images/blackjack-chips.png', 'json_imag/cards_chips.json']
+			'chips': ['images/blackjack-chips.png', 'json_imag/cards_chips.json'],
 		}
 
 	@property
-	def cards_dict(self) -> Dict:
+	def cards_dict(self) -> Dict[str, List[str]]:
 		"""Get повертає Dict з посиланнями на ігрові об'єкти (images, json)"""
 		return self.__cards_dict
 
-	def get_current_sprite(self, name: str, denomination: str) -> Any:
+	def get_current_sprite(self, name: str, denomination: str) -> pygame.surface:
 		"""Створює об'єкт SpriteSheet із потрібної області"""
 		current_card = SpriteSheet(self.cards_dict.get(name))
 

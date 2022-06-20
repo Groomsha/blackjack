@@ -24,7 +24,9 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Any
+
+import pygame
 
 from creation.creation_base import CreationBase
 
@@ -34,14 +36,14 @@ class CreationShirts(CreationBase):
 		"""Клас створює сорочки у грі"""
 		super(CreationShirts, self).__init__()
 
-	def _creation_sprite_to_sc(self, quantity: Dict) -> Tuple:
+	def _creation_sprite_to_sc(self, quantity: Dict[str, Any]) -> Tuple[pygame.Surface, Tuple[int, int]]:
 		"""Метод створює Dict з об'єктом сорочка та повертає Tuple з об'єктом"""
 		sprite = self._sprite_area.get_current_sprite(quantity.get('shirt'), quantity.get('color'))
 		self._sprite_tuple = (sprite, quantity.get('pos_c'))
 
 		return self._sprite_tuple
 
-	def return_sprite_to_sc(self, quantity: Dict) -> Tuple:
+	def return_sprite_to_sc(self, quantity: Dict[str, Any]) -> Tuple[pygame.Surface, Tuple[int, int]]:
 		"""Метод повертає Tuple з об'єктом сорочка"""
 		sprite: Tuple = self._creation_sprite_to_sc(quantity)
 

@@ -24,7 +24,9 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Any
+
+import pygame
 
 from creation.creation_base import CreationBase
 
@@ -33,14 +35,14 @@ class CreationCards(CreationBase):
 	def __init__(self) -> None:
 		"""Клас створює карти у грі"""
 		super(CreationCards, self).__init__()
-		self.__cards_dict: Dict = {}
+		self.__cards_dict: Dict[str, pygame.Surface] = {}
 
 	@property
-	def cards_dict(self) -> Dict:
+	def cards_dict(self) -> Dict[str, pygame.Surface]:
 		"""Get повертає Dict з об'єктами карт"""
 		return self.__cards_dict
 
-	def _creation_sprite_to_sc(self, quantity: Dict) -> Tuple:
+	def _creation_sprite_to_sc(self, quantity: Dict[str, Any]) -> Tuple[pygame.Surface, Tuple[int, int]]:
 		"""Метод створює Dict з об'єктом карти та повертає Tuple об'єкта"""
 		sprite = self._sprite_area.get_current_sprite(quantity['suit'], quantity['value'])
 
@@ -49,7 +51,7 @@ class CreationCards(CreationBase):
 
 		return self._sprite_tuple
 
-	def return_sprite_to_sc(self, quantity: Dict) -> Tuple:
+	def return_sprite_to_sc(self, quantity: Dict[str, Any]) -> Tuple[pygame.Surface, Tuple[int, int]]:
 		"""Метод повертає Tuple з об'єктом карти"""
 		sprite: Tuple = self._creation_sprite_to_sc(quantity)
 

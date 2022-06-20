@@ -31,16 +31,16 @@ from typing import List, Tuple
 class CreationDeck:
 	def __init__(self) -> None:
 		"""Створення ігрової колоди"""
-		self.__shuffled_deck: Tuple = ()
+		self.__shuffled_deck: Tuple[Tuple[str, int]] = ()
 		self.__suits: List = ['clubs', 'peaks', 'timbrel', 'worms']
 		self.__values: List = ['2','3','4','5','6','7','8','9','10','V','D','K','A']
 
 	@property
-	def shuffled_deck(self) -> Tuple:
+	def shuffled_deck(self) -> Tuple[Tuple[str, int]]:
 		"""Get повертає Tuple з восьмі тасованих колод"""
 		return self.__shuffled_deck
 
-	def __deck_building(self) -> Tuple:
+	def __deck_building(self) -> Tuple[Tuple[str, int]]:
 		"""створення однієї повної колоди"""
 		one_deck = tuple()
 

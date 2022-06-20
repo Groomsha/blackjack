@@ -30,18 +30,18 @@ import pygame
 
 
 class Base:
-	def __init__(self, sc: Any, settings: Dict) -> None:
+	def __init__(self, sc: pygame, settings: Dict[str, str]) -> None:
 		"""Базовий клас для логіки гравців"""
-		self.__sc_main = sc
-		self.__settings = settings
+		self.__sc_main: pygame = sc
+		self.__settings: Dict[str, str] = settings
 
 	@property
-	def settings(self) -> Dict:
+	def settings(self) -> Dict[str, str]:
 		"""Get повертає налаштування ігрового поля"""
 		return self.__settings
 
 	@property
-	def sc_main(self) -> Any:
+	def sc_main(self) -> pygame:
 		"""Get повертає об'єкт ігрового поля"""
 		return self.__sc_main
 
@@ -49,7 +49,7 @@ class Base:
 		"""Метод створює об'єкти гри"""
 		pass
 
-	def _creation_text(self, options: Tuple) -> Any:
+	def _creation_text(self, options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
 		"""Створення тексту гравців"""
 		py_text = pygame.font.Font(None, options[1])
 		py_text = py_text.render(options[0], True, options[2])

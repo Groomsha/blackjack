@@ -31,41 +31,41 @@ import pygame
 
 
 class SpriteSheet:
-	def __init__(self, sprite_map: List) -> None:
+	def __init__(self, sprite_map: List[str]) -> None:
 		"""Клас вирізає певну область на зображенні, і повертається із зазначеними параметрами в json """
 		self.__sprite_sheet = pygame.image.load(sprite_map[0]).convert()
 
 		with open(sprite_map[1]) as file:
 			self.__sprite_map = load(file)
 
-	def __get_sprite(self, setings: List) -> Any:
+	def __get_sprite(self, settings: List[Any]) -> pygame.Surface:
 		"""Метод повертає вирізану область із зазначеними параметрами"""
-		sprite = pygame.Surface((setings[2], setings[3]))
+		sprite = pygame.Surface((settings[2], settings[3]))
 
-		if setings[8]:
+		if settings[8]:
 			sprite.set_colorkey((0, 0, 0))
 
-		sprite.blit(self.__sprite_sheet, (0, 0), (setings[0], setings[1], setings[2], setings[3]))
-		sprite = pygame.transform.scale(sprite, (setings[4], setings[5]))
-		sprite = pygame.transform.rotate(sprite, setings[6])
+		sprite.blit(self.__sprite_sheet, (0, 0), (settings[0], settings[1], settings[2], settings[3]))
+		sprite = pygame.transform.scale(sprite, (settings[4], settings[5]))
+		sprite = pygame.transform.rotate(sprite, settings[6])
 
 		return sprite
 
-	def parse_sprite(self, name) -> Any:
+	def parse_sprite(self, name: str) -> pygame.Surface:
 		"""Метод повертає іменовану область"""
-		setings_sprite: List = []
+		settings_sprite: List[Any] = []
 
 		sprite = self.__sprite_map['frames'][name]['frame']
-		setings_sprite.extend([sprite["x"], sprite["y"], sprite["w"], sprite["h"]])
+		settings_sprite.extend([sprite["x"], sprite["y"], sprite["w"], sprite["h"]])
 
 		sprite = self.__sprite_map['frames'][name]['frameSize']
-		setings_sprite.extend([sprite["w"], sprite["h"]])
+		settings_sprite.extend([sprite["w"], sprite["h"]])
 
 		sprite = self.__sprite_map['frames'][name]['rotated']
-		setings_sprite.extend([sprite["x"], sprite["y"]])
+		settings_sprite.extend([sprite["x"], sprite["y"]])
 
-		setings_sprite.append(self.__sprite_map['frames'][name]['alfa24'])
+		settings_sprite.append(self.__sprite_map['frames'][name]['alfa24'])
 
-		image = self.__get_sprite(setings_sprite)
+		image = self.__get_sprite(settings_sprite)
 
 		return image

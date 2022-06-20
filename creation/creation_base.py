@@ -39,11 +39,11 @@ class CreationBase:
 		self._sc_text = CreationText()
 		self._sprite_area = DesiredArea()
 
-	def _creation_sprite_to_sc(self, quantity: Dict) -> None:
+	def _creation_sprite_to_sc(self, quantity: Dict[str, Any]) -> Tuple[pygame.Surface, Tuple[int, int]]:
 		"""Створення ігрового об'єкту на полі"""
 		pass
 
-	def return_sprite_to_sc(self, quantity: Dict) -> Tuple:
+	def return_sprite_to_sc(self, quantity: Dict[str, Any]) -> Tuple[pygame.Surface, Tuple[int, int]]:
 		"""Повертає ігровий об'єкт на поле"""
 		pass
 
@@ -53,7 +53,7 @@ class CreationText:
 	def __init__(self) -> None:
 		pass
 
-	def _creation_text_to_sc(self, options: Tuple) -> Any:
+	def _creation_text_to_sc(self, options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
 		"""Створення тексту для ігрового об'єкту на полі"""
 		py_text = pygame.font.Font(None, options[1])
 		py_text = py_text.render(options[0], True, options[2])

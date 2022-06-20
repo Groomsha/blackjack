@@ -24,7 +24,9 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Any
+from typing import Dict
+
+import pygame
 
 from players.base import Base
 from sources.creation_deck import CreationDeck
@@ -33,7 +35,7 @@ from creation.creation_shirts import CreationShirts
 
 
 class Dealer(Base):
-	def __init__(self, sc: Any, settings: Dict) -> None:
+	def __init__(self, sc: pygame, settings: Dict[str, str]) -> None:
 		"""Клас для логіки дилера"""
 		super(Dealer, self).__init__(sc, settings)
 

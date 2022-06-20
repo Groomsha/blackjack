@@ -24,12 +24,14 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Any
+from typing import Dict
+
+import pygame
 
 from players.base import Base
 
 
 class Player(Base):
-	def __init__(self, sc: Any, settings: Dict) -> None:
+	def __init__(self, sc: pygame, settings: Dict[str, str]) -> None:
 		"""Клас для логіки гравця"""
 		super(Player, self).__init__(sc, settings)
