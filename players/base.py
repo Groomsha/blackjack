@@ -23,10 +23,12 @@ Description: Створення гри BlackJack для курсового пр�
 Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
-
-from typing import Dict, Any, Tuple
+import random
+from typing import Dict, Tuple
 
 import pygame
+
+from creation.creation_shirts import CreationShirts
 
 
 class Base:
@@ -34,6 +36,13 @@ class Base:
 		"""Базовий клас для логіки гравців"""
 		self.__sc_main: pygame = sc
 		self.__settings: Dict[str, str] = settings
+		self.__cash: pygame.Surface = self._creation_text(('0', 36, (255, 255, 255)))
+		self.__total: pygame.Surface = self._creation_text((self.__settings['game_amount'], 36, (255, 255, 255)))
+
+		self.__sc_main.blit(self.__cash, (355, 738))
+		self.__sc_main.blit(self.__total, (1065, 738))
+
+		self._shirts_color: str = 'red' if random.randint(0, 1) else 'blue'
 
 	@property
 	def settings(self) -> Dict[str, str]:
@@ -47,9 +56,14 @@ class Base:
 
 	def _creation_object(self) -> None:
 		"""Метод створює об'єкти гри"""
-		pass
+		shirts = CreationShirts()
 
-	def _creation_text(self, options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
+		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': self._shirts_color, 'pos_c': (917, 150)})
+		shirts_rotate = pygame.transform.rotate(shirts_sprite[0].convert_alpha(), 65)
+		self.sc_main.blit(shirts_rotate, shirts_sprite[1])
+
+	@staticmethod
+	def _creation_text(options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
 		"""Створення тексту гравців"""
 		py_text = pygame.font.Font(None, options[1])
 		py_text = py_text.render(options[0], True, options[2])

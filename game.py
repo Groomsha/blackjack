@@ -81,7 +81,9 @@ class Game:
 				if event.type == pygame.QUIT:
 					exit()
 				elif event.type == pygame.MOUSEBUTTONDOWN:
-					pass
+					x, y = pygame.mouse.get_pos()
+
+					chip = self.__game_chips._mouse_event_click(x, y)
 
 			clock.tick(self.FPS)
 
@@ -93,19 +95,30 @@ class GameCreationChips:
 		__chips = CreationChips()
 		__counter: int = 0
 
-		__chips_list: Dict = {'chip_1': {
-								'pos_c': (975, 625), 'text': settings.get("chip_values")[0], 'pos_t': (975, 625)},
+		__chips_dict: Dict = {'chip_1': {
+								'pos_c': (975, 625), 'text': settings.get("chip_values")[0], 'pos_t': (1005, 675)},
 							'chip_2': {
-								'pos_c': (1060, 625), 'text': settings.get("chip_values")[1], 'pos_t': (1060, 625)},
+								'pos_c': (1060, 625), 'text': settings.get("chip_values")[1], 'pos_t': (1090, 675)},
 							'chip_3': {
-								'pos_c': (1145, 625), 'text': settings.get("chip_values")[2], 'pos_t': (1145, 625)},
+								'pos_c': (1145, 625), 'text': settings.get("chip_values")[2], 'pos_t': (1170, 675)},
 							'chip_4': {
-								'pos_c': (1230, 625), 'text': settings.get("chip_values")[3], 'pos_t': (1230, 625)}
+								'pos_c': (1230, 625), 'text': settings.get("chip_values")[3], 'pos_t': (1255, 675)}
 		}
 
-		for meaning in __chips.return_sprite_to_sc(__chips_list):
+		for meaning in __chips.return_sprite_to_sc(__chips_dict):
 			if __counter % 2 == 0:
 				__meaning_temp = meaning
 			else:
 				sc.blit(__meaning_temp, meaning)
 			__counter += 1
+
+	@staticmethod
+	def _mouse_event_click(mouse_x: int, mouse_y: int) -> str:
+		if 975 <= mouse_x <= 1055 and 655 <= mouse_y <= 725:
+			return '10'
+		elif 1065 <= mouse_x <= 1145 and 655 <= mouse_y <= 725:
+			return '50'
+		elif 1155 <= mouse_x <= 1235 and 655 <= mouse_y <= 725:
+			return '100'
+		elif 1245 <= mouse_x <= 1560 and 655 <= mouse_y <= 725:
+			return '500'

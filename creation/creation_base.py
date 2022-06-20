@@ -53,7 +53,8 @@ class CreationText:
 	def __init__(self) -> None:
 		pass
 
-	def _creation_text_to_sc(self, options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
+	@staticmethod
+	def _creation_text_to_sc(options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
 		"""Створення тексту для ігрового об'єкту на полі"""
 		py_text = pygame.font.Font(None, options[1])
 		py_text = py_text.render(options[0], True, options[2])
