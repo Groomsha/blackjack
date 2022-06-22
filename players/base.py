@@ -24,13 +24,13 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Any
 
 import pygame
 
 
 class Base:
-	def __init__(self, sc: pygame, settings: Dict[str, str]) -> None:
+	def __init__(self, sc: Any, settings: Dict[str, str]) -> None:
 		"""Базовий клас для логіки гравців"""
 		self.__sc_main: pygame = sc.sc_main
 		self.__start_game: bool = False

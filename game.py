@@ -65,6 +65,10 @@ class Game:
 	def sc_main(self) ->pygame:
 		return self.__sc_main
 
+	@property
+	def shirts_color(self) -> str:
+		return self.__shirts_color
+
 	def creation_object(self) -> None:
 		"""Метод створює об'єкти на ігровому полі"""
 		shirts = CreationShirts()
@@ -96,10 +100,18 @@ class Game:
 					x, y = pygame.mouse.get_pos()
 
 					if not self.__player.start_game:
-						chip_val = self.__game_chips._mouse_event_click(x, y)
+						chip_val: int = self.__game_chips.mouse_event_click(x, y)
 
 						if not chip_val == None:
 							self.__player.current_rate(chip_val)
+						else:
+							if self.__player.cash_current > 0:
+								self.__player.mouse_event_click_bit(x, y)
+
+								if self.__player.start_game:
+									self.__dealer.distribution()
+					else:
+						self.__player.mouse_event_click_game(x, y)
 
 			clock.tick(self.FPS)
 			pygame.display.update()
@@ -131,7 +143,7 @@ class GameCreationChips:
 			__counter += 1
 
 	@staticmethod
-	def _mouse_event_click(mouse_x: int, mouse_y: int) -> int:
+	def mouse_event_click(mouse_x: int, mouse_y: int) -> int:
 		if 975 <= mouse_x <= 1055 and 655 <= mouse_y <= 725:
 			return -1
 		elif 1065 <= mouse_x <= 1145 and 655 <= mouse_y <= 725:
