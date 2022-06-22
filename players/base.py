@@ -39,6 +39,9 @@ class Base:
 		self.__settings: Dict[str, str] = settings
 		self.__logic: Any = Distribution(sc)
 
+		self.cash_current_: int = 0
+		self.cash_total: int = int(self.settings['game_amount'])
+
 	@property
 	def settings(self) -> Dict[str, str]:
 		"""Get повертає налаштування ігрового поля"""

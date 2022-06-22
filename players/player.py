@@ -45,9 +45,9 @@ class Player(Base):
 		self.__create_sc_text()
 		self.__button_bit()
 
-	@property
-	def cash_current(self) -> int:
-		return self.__cash_current
+	# @property
+	# def cash_current(self) -> int:
+	# 	return self.__cash_current
 
 	@property
 	def player_pass(self) -> bool:
