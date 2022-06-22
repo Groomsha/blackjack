@@ -1,0 +1,22 @@
+{
+  "frames": {
+        "button_deal.png": {
+              "frame": {"x":0,"y":0,"w":70,"h":70},
+              "frameSize": {"w":90,"h":90},
+              "rotated": {"x":0, "y":0},
+              "alfa24": true
+        },
+        "button_yes.png": {
+              "frame": {"x":141,"y":0,"w":70,"h":70},
+              "frameSize": {"w":90,"h":90},
+              "rotated": {"x":0, "y":0},
+              "alfa24": true
+        },
+        "button_no.png": {
+              "frame": {"x":211,"y":0,"w":70,"h":70},
+              "frameSize": {"w":90,"h":90},
+              "rotated": {"x":0, "y":0},
+              "alfa24": true
+        }
+      }
+  }

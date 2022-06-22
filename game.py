@@ -61,6 +61,10 @@ class Game:
 		self.__creation_opponents()
 		self.__main_game_loop()
 
+	@property
+	def sc_main(self) ->pygame:
+		return self.__sc_main
+
 	def creation_object(self) -> None:
 		"""Метод створює об'єкти на ігровому полі"""
 		shirts = CreationShirts()
@@ -74,13 +78,11 @@ class Game:
 		self.__sc_main.blit(sc_shirts, shirts_sprite[1])
 
 		self.__game_chips = GameCreationChips(self.__sc_main, self.__settings)
-		pygame.display.update()
 
 	def __creation_opponents(self) -> None:
 		"""Метод створює опонентів гри"""
-		self.__player = Player(self.__sc_main, self.__settings)
-		self.__dealer = Dealer(self.__sc_main, self.__settings)
-		pygame.display.update()
+		self.__player = Player(self, self.__settings)
+		self.__dealer = Dealer(self, self.__settings)
 
 	def __main_game_loop(self) -> None:
 		"""Основний цикл гри"""
@@ -94,10 +96,13 @@ class Game:
 					x, y = pygame.mouse.get_pos()
 
 					if not self.__player.start_game:
-						chip = self.__game_chips._mouse_event_click(x, y)
-						print(chip)
+						chip_val = self.__game_chips._mouse_event_click(x, y)
+
+						if not chip_val == None:
+							self.__player.current_rate(chip_val)
 
 			clock.tick(self.FPS)
+			pygame.display.update()
 
 
 class GameCreationChips:

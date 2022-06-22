@@ -41,7 +41,7 @@ class Dealer(Base):
 		self.deck = CreationDeck()
 		self.deck.update_shuffled()
 
-		self._creation_object()
+		# self._creation_object()
 
 	def _creation_object(self) -> None:
 		"""Метод створює об'єкти гри"""

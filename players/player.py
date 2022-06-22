@@ -29,6 +29,7 @@ from typing import Dict
 import pygame
 
 from players.base import Base
+from creation.creation_button import CreationButton
 
 
 class Player(Base):
@@ -36,8 +37,36 @@ class Player(Base):
 		"""Клас для логіки гравця"""
 		super(Player, self).__init__(sc, settings)
 
-		self.__cash: pygame.Surface = self._creation_text(('0', 36, (255, 255, 255)))
-		self.__total: pygame.Surface = self._creation_text((self.settings['game_amount'], 36, (255, 255, 255)))
+		self.game_class = sc
+		self.__cash_current: int = 0
+		self.__cash_total: int = int(self.settings['game_amount'])
+
+		self.create_sc_text()
+		self.button_bit()
+
+	def current_rate(self, chip_val: int) -> None:
+		if not chip_val == -1:
+			temp = self.__cash_total - chip_val
+
+			if temp >= 0:
+				self.__cash_total -= chip_val
+				self.__cash_current += chip_val
+		else:
+			self.__cash_total += self.__cash_current
+			self.__cash_current = 0
+
+		self.game_class.creation_object()
+		self.create_sc_text()
+		self.button_bit()
+
+	def button_bit(self) -> None:
+		button = CreationButton()
+		bit_sprite = button.return_sprite_to_sc({'suit': 'button', 'value': 'deal', 'pos_c': (630, 630)})
+		self.sc_main.blit(bit_sprite[0], bit_sprite[1])
+
+	def create_sc_text(self) -> None:
+		self.__cash: pygame.Surface = self._creation_text((str(self.__cash_current), 36, (255, 255, 255)))
+		self.__total: pygame.Surface = self._creation_text((str(self.__cash_total), 36, (255, 255, 255)))
 
 		self.sc_main.blit(self.__cash, (355, 738))
 		self.sc_main.blit(self.__total, (1065, 738))

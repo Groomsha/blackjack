@@ -41,6 +41,7 @@ class DesiredArea:
 			'peaks': ['images/blackjack-cards.png', 'json_imag/cards_peaks.json'],
 			'shirts': ['images/blackjack-shirt.png', 'json_imag/cards_shirts.json'],
 			'chips': ['images/blackjack-chips.png', 'json_imag/cards_chips.json'],
+			'button': ['images/blackjack-button.png', 'json_imag/cards_button.json'],
 		}
 
 	@property
