@@ -24,6 +24,7 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
+import random
 from typing import Dict
 
 import pygame
@@ -32,6 +33,7 @@ from players.player import Player
 from players.dealer import Dealer
 
 from creation.creation_chips import CreationChips
+from creation.creation_shirts import CreationShirts
 
 
 class Game:
@@ -49,28 +51,36 @@ class Game:
 
 		pygame.init()
 
+		self.__shirts_color: str = 'red' if random.randint(0, 1) else 'blue'
 		self.__sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
 		pygame.display.set_caption(f'BlackJack ({self.__settings.get("description")}) '
 								f''f'{self.__settings.get("version_app")}')
 
-		self.__creation_object()
+		self.creation_object()
 		self.__creation_opponents()
-
-		pygame.display.update()
 		self.__main_game_loop()
 
-	def __creation_object(self) -> None:
+	def creation_object(self) -> None:
 		"""Метод створює об'єкти на ігровому полі"""
+		shirts = CreationShirts()
+		shirts_sprite = shirts.return_sprite_to_sc(
+			{'shirt': 'shirts', 'color': self.__shirts_color, 'pos_c': (917, 150)})
+
 		sc_table: pygame.Surface = pygame.image.load('images/blackjack-table.png').convert()
+		sc_shirts = pygame.transform.rotate(shirts_sprite[0].convert_alpha(), 65)
+
 		self.__sc_main.blit(sc_table, (0, 0))
+		self.__sc_main.blit(sc_shirts, shirts_sprite[1])
 
 		self.__game_chips = GameCreationChips(self.__sc_main, self.__settings)
+		pygame.display.update()
 
 	def __creation_opponents(self) -> None:
 		"""Метод створює опонентів гри"""
 		self.__player = Player(self.__sc_main, self.__settings)
 		self.__dealer = Dealer(self.__sc_main, self.__settings)
+		pygame.display.update()
 
 	def __main_game_loop(self) -> None:
 		"""Основний цикл гри"""
@@ -112,6 +122,7 @@ class GameCreationChips:
 				__meaning_temp = meaning
 			else:
 				sc.blit(__meaning_temp, meaning)
+
 			__counter += 1
 
 	@staticmethod

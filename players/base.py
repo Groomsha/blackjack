@@ -23,12 +23,10 @@ Description: Створення гри BlackJack для курсового пр�
 Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
-import random
+
 from typing import Dict, Tuple
 
 import pygame
-
-from creation.creation_shirts import CreationShirts
 
 
 class Base:
@@ -37,8 +35,6 @@ class Base:
 		self.__sc_main: pygame = sc
 		self.__start_game: bool = False
 		self.__settings: Dict[str, str] = settings
-
-		self._shirts_color: str = 'red' if random.randint(0, 1) else 'blue'
 
 	@property
 	def settings(self) -> Dict[str, str]:
@@ -60,11 +56,7 @@ class Base:
 
 	def _creation_object(self) -> None:
 		"""Метод створює об'єкти гри"""
-		shirts = CreationShirts()
-
-		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': self._shirts_color, 'pos_c': (917, 150)})
-		shirts_rotate = pygame.transform.rotate(shirts_sprite[0].convert_alpha(), 65)
-		self.sc_main.blit(shirts_rotate, shirts_sprite[1])
+		pass
 
 	@staticmethod
 	def _creation_text(options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:

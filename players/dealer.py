@@ -45,7 +45,6 @@ class Dealer(Base):
 
 	def _creation_object(self) -> None:
 		"""Метод створює об'єкти гри"""
-		super(Dealer, self)._creation_object()
 
 		cards = CreationCards()
 		card_sprite = cards.return_sprite_to_sc({'suit': 'worms', 'value': 'A', 'pos_c': (20, 500)})
