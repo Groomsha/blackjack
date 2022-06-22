@@ -37,8 +37,9 @@ class Player(Base):
 		"""Клас для логіки гравця"""
 		super(Player, self).__init__(sc, settings)
 
-		self.game_class = sc
 		self.__cash_current: int = 0
+		self.__player_pass: bool = False
+		self.__player_add: bool = False
 		self.__cash_total: int = int(self.settings['game_amount'])
 
 		self.__create_sc_text()
@@ -47,6 +48,14 @@ class Player(Base):
 	@property
 	def cash_current(self) -> int:
 		return self.__cash_current
+
+	@property
+	def player_pass(self) -> bool:
+		return self.__player_pass
+
+	@property
+	def player_add(self) -> bool:
+		return self.__player_add
 
 	def current_rate(self, chip_val: int) -> None:
 		if not chip_val == -1:
@@ -59,7 +68,7 @@ class Player(Base):
 			self.__cash_total += self.__cash_current
 			self.__cash_current = 0
 
-		self.game_class.creation_object()
+		self.logic.main_game.creation_object()
 		self.__create_sc_text()
 		self.__button_bit()
 
@@ -87,13 +96,13 @@ class Player(Base):
 	def mouse_event_click_bit(self, mouse_x: int, mouse_y: int) -> None:
 		if 635 <= mouse_x <= 715 and 635 <= mouse_y <= 715:
 			self.start_game = True
-			self.game_class.creation_object()
+			self.logic.main_game.creation_object()
 			self.__create_sc_text()
 			self.__button_game()
 			print('Start Game')
 
 	def mouse_event_click_game(self, mouse_x: int, mouse_y: int) -> None:
 		if 585 <= mouse_x <= 665 and 635 <= mouse_y <= 715:
-			print('Add Card')
+			self.__player_add = True
 		elif 685 <= mouse_x <= 765 and 635 <= mouse_y <= 715:
-			print('Pass')
+			self.__player_pass = True

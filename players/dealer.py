@@ -39,8 +39,6 @@ class Dealer(Base):
 		"""Клас для логіки дилера"""
 		super(Dealer, self).__init__(sc, settings)
 
-		self.__game: Any = sc
-
 		self.__deck = CreationDeck()
 		self.__deck.update_shuffled()
 
@@ -64,7 +62,7 @@ class Dealer(Base):
 
 		card_sprite = cards.return_sprite_to_sc({'suit': self.__dealer_cards[0], 'value': self.__dealer_cards[1], 'pos_c': (600, 200)})
 		self.sc_main.blit(card_sprite[0], card_sprite[1])
-		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': self.__game.shirts_color, 'pos_c': (680, 200)})
+		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': self.logic.main_game.shirts_color, 'pos_c': (680, 200)})
 		self.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
 
 		card_sprite = cards.return_sprite_to_sc({'suit': self.__player_cards[0], 'value': self.__player_cards[1], 'pos_c': (600, 470)})
@@ -85,6 +83,12 @@ class Dealer(Base):
 		temp_text: str = f'Player Score: {self.___player_score}'
 		self.player_score_text: pygame.Surface = self._creation_text((str(temp_text), 36, (255, 255, 255)))
 		self.sc_main.blit(self.player_score_text, (590, 570))
+
+	def player_game(self):
+		pass
+
+	def dealer_game(self):
+		self.logic.main_game.creation_object()
 
 	@staticmethod
 	def __count_score_distribution(*args) -> int:

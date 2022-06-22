@@ -113,6 +113,14 @@ class Game:
 					else:
 						self.__player.mouse_event_click_game(x, y)
 
+						if self.__player.player_pass:
+							self.__dealer.dealer_game()
+							print('Game Over')
+
+						if self.__player.player_add:
+							self.__dealer.player_game()
+							print('add card')
+
 			clock.tick(self.FPS)
 			pygame.display.update()
 

@@ -28,6 +28,8 @@ from typing import Dict, Tuple, Any
 
 import pygame
 
+from sources.distribution import Distribution
+
 
 class Base:
 	def __init__(self, sc: Any, settings: Dict[str, str]) -> None:
@@ -35,6 +37,7 @@ class Base:
 		self.__sc_main: pygame = sc.sc_main
 		self.__start_game: bool = False
 		self.__settings: Dict[str, str] = settings
+		self.__logic: Any = Distribution(sc)
 
 	@property
 	def settings(self) -> Dict[str, str]:
@@ -45,6 +48,11 @@ class Base:
 	def sc_main(self) -> pygame:
 		"""Get повертає об'єкт ігрового поля"""
 		return self.__sc_main
+
+	@property
+	def logic(self) -> Distribution:
+		"""Get повертає об'єкт ігрового поля"""
+		return self.__logic
 
 	@property
 	def start_game(self) -> bool:
