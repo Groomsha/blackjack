@@ -26,8 +26,6 @@ https://www.linkedin.com/in/ihor-cheberiak/
 
 from typing import Dict, Tuple, List, Any
 
-import pygame
-
 from players.base import Base
 from sources.creation_deck import CreationDeck
 from creation.creation_cards import CreationCards
@@ -35,15 +33,12 @@ from creation.creation_shirts import CreationShirts
 
 
 class Dealer(Base):
-	def __init__(self, sc: Any, settings: Dict[str, str]) -> None:
+	def __init__(self, sc: Any) -> None:
 		"""Клас для логіки дилера"""
-		super(Dealer, self).__init__(sc, settings)
+		super(Dealer, self).__init__(sc)
 
 		self.__deck = CreationDeck()
 		self.__deck.update_shuffled()
-
-		self.___player_score: int = 0
-		self.___dealer_score: int = 0
 
 		self.__player_cards: Tuple = tuple()
 		self.__dealer_cards: Tuple = tuple()
@@ -61,28 +56,18 @@ class Dealer(Base):
 		self.__player_cards += self.__deck.shuffled_deck[3]
 
 		card_sprite = cards.return_sprite_to_sc({'suit': self.__dealer_cards[0], 'value': self.__dealer_cards[1], 'pos_c': (600, 200)})
-		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		self.logic.main_game.sc_main.blit(card_sprite[0], card_sprite[1])
 		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': self.logic.main_game.shirts_color, 'pos_c': (680, 200)})
-		self.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
+		self.logic.main_game.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
 
 		card_sprite = cards.return_sprite_to_sc({'suit': self.__player_cards[0], 'value': self.__player_cards[1], 'pos_c': (600, 470)})
-		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		self.logic.main_game.sc_main.blit(card_sprite[0], card_sprite[1])
 		card_sprite = cards.return_sprite_to_sc({'suit': self.__player_cards[2], 'value': self.__player_cards[3], 'pos_c': (680, 470)})
-		self.sc_main.blit(card_sprite[0], card_sprite[1])
+		self.logic.main_game.sc_main.blit(card_sprite[0], card_sprite[1])
 
-		self.__create_sc_text()
-
-	def __create_sc_text(self) -> None:
-		self.___dealer_score = self.__count_score_distribution(self.__dealer_cards[1])
-		self.___player_score = self.__count_score_distribution(self.__player_cards[1], self.__player_cards[3])
-
-		temp_text: str = f'Dealer Score: {self.___dealer_score}'
-		self.dealer_score_text: pygame.Surface = self._creation_text((str(temp_text), 36, (255, 255, 255)))
-		self.sc_main.blit(self.dealer_score_text, (590, 300))
-
-		temp_text: str = f'Player Score: {self.___player_score}'
-		self.player_score_text: pygame.Surface = self._creation_text((str(temp_text), 36, (255, 255, 255)))
-		self.sc_main.blit(self.player_score_text, (590, 570))
+		self.dealer_score = self.__count_score_distribution(self.__dealer_cards[1])
+		self.player_score = self.__count_score_distribution(self.__player_cards[1], self.__player_cards[3])
+		self.logic.create_sc_text('dealer', f'Dealer Score: {self.dealer_score}', f'Player Score: {self.player_score}')
 
 	def player_game(self):
 		pass
@@ -103,8 +88,3 @@ class Dealer(Base):
 				temp_list.append(11)
 
 		return sum(temp_list)
-
-
-	def _creation_object(self) -> None:
-		"""Метод створює об'єкти гри"""
-		pass

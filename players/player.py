@@ -26,83 +26,43 @@ https://www.linkedin.com/in/ihor-cheberiak/
 
 from typing import Dict, Any
 
-import pygame
-
 from players.base import Base
 from creation.creation_button import CreationButton
 
 
 class Player(Base):
-	def __init__(self, sc: Any, settings: Dict[str, str]) -> None:
+	def __init__(self, sc: Any) -> None:
 		"""Клас для логіки гравця"""
-		super(Player, self).__init__(sc, settings)
+		super(Player, self).__init__(sc)
 
-		self.__cash_current: int = 0
-		self.__player_pass: bool = False
-		self.__player_add: bool = False
-		self.__cash_total: int = int(self.settings['game_amount'])
-
-		self.__create_sc_text()
-		self.__button_bit()
-
-	# @property
-	# def cash_current(self) -> int:
-	# 	return self.__cash_current
-
-	@property
-	def player_pass(self) -> bool:
-		return self.__player_pass
-
-	@property
-	def player_add(self) -> bool:
-		return self.__player_add
+		self.logic.create_sc_text('player', str(self.cash_current), str(self.cash_total))
+		self.logic.create_sc_buttons('bit')
 
 	def current_rate(self, chip_val: int) -> None:
 		if not chip_val == -1:
-			temp = self.__cash_total - chip_val
+			temp = self.cash_total - chip_val
 
 			if temp >= 0:
-				self.__cash_total -= chip_val
-				self.__cash_current += chip_val
+				self.cash_total -= chip_val
+				self.cash_current += chip_val
 		else:
-			self.__cash_total += self.__cash_current
-			self.__cash_current = 0
+			self.cash_total += self.cash_current
+			self.cash_current = 0
 
 		self.logic.main_game.creation_object()
-		self.__create_sc_text()
-		self.__button_bit()
-
-	def __button_bit(self) -> None:
-		button = CreationButton()
-		bit_sprite = button.return_sprite_to_sc({'suit': 'button', 'value': 'deal', 'pos_c': (630, 630)})
-		self.sc_main.blit(bit_sprite[0], bit_sprite[1])
-
-	def __button_game(self) -> None:
-		button = CreationButton()
-
-		yes_sprite = button.return_sprite_to_sc({'suit': 'button', 'value': 'yes', 'pos_c': (580, 630)})
-		no_sprite = button.return_sprite_to_sc({'suit': 'button', 'value': 'no', 'pos_c': (680, 630)})
-
-		self.sc_main.blit(yes_sprite[0], yes_sprite[1])
-		self.sc_main.blit(no_sprite[0], no_sprite[1])
-
-	def __create_sc_text(self) -> None:
-		self.__cash: pygame.Surface = self._creation_text((str(self.__cash_current), 36, (255, 255, 255)))
-		self.__total: pygame.Surface = self._creation_text((str(self.__cash_total), 36, (255, 255, 255)))
-
-		self.sc_main.blit(self.__cash, (355, 738))
-		self.sc_main.blit(self.__total, (1065, 738))
+		self.logic.create_sc_text('player', str(self.cash_current), str(self.cash_total))
+		self.logic.create_sc_buttons('bit')
 
 	def mouse_event_click_bit(self, mouse_x: int, mouse_y: int) -> None:
 		if 635 <= mouse_x <= 715 and 635 <= mouse_y <= 715:
 			self.start_game = True
 			self.logic.main_game.creation_object()
-			self.__create_sc_text()
-			self.__button_game()
+			self.logic.create_sc_text('player', str(self.cash_current), str(self.cash_total))
+			self.logic.create_sc_buttons('game')
 			print('Start Game')
 
 	def mouse_event_click_game(self, mouse_x: int, mouse_y: int) -> None:
 		if 585 <= mouse_x <= 665 and 635 <= mouse_y <= 715:
-			self.__player_add = True
+			self.player_add = True
 		elif 685 <= mouse_x <= 765 and 635 <= mouse_y <= 715:
-			self.__player_pass = True
+			self.player_pass = True

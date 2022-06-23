@@ -66,6 +66,10 @@ class Game:
 		return self.__sc_main
 
 	@property
+	def settings(self) -> Dict:
+		return self.__settings
+
+	@property
 	def shirts_color(self) -> str:
 		return self.__shirts_color
 
@@ -85,8 +89,8 @@ class Game:
 
 	def __creation_opponents(self) -> None:
 		"""Метод створює опонентів гри"""
-		self.__player = Player(self, self.__settings)
-		self.__dealer = Dealer(self, self.__settings)
+		self.__player = Player(self)
+		self.__dealer = Dealer(self)
 
 	def __main_game_loop(self) -> None:
 		"""Основний цикл гри"""

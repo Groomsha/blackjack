@@ -24,9 +24,11 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Tuple, Dict, Any
+from typing import Tuple, Any
 
 import pygame
+
+from creation.creation_button import CreationButton
 
 
 class Distribution:
@@ -34,27 +36,40 @@ class Distribution:
 		self.main_game = game
 
 	def create_sc_text(self, cursor: str, *args) -> None:
-		sprite: pygame = None
-
 		if cursor == 'player':
-			sprite = self._creation_text((str(self.cash_current), 36, (255, 255, 255)))
+			sprite = self.__creation_text((args[0], 36, (255, 255, 255)))
 			self.main_game.sc_main.blit(sprite, (355, 738))
 
-			sprite = self._creation_text((str(self.cash_total), 36, (255, 255, 255)))
-			self.main_game.sc_main.blit(sprite, (355, 738))
+			sprite = self.__creation_text((args[1], 36, (255, 255, 255)))
+			self.main_game.sc_main.blit(sprite, (1065, 738))
 		elif cursor == 'dealer':
-			temp_text: str = f'Dealer Score: {self.___dealer_score}'
-			sprite = self._creation_text((str(temp_text), 36, (255, 255, 255)))
+			sprite = self.__creation_text((args[0], 36, (255, 255, 255)))
 			self.main_game.sc_main.blit(sprite, (590, 300))
 
-			temp_text: str = f'Player Score: {self.___player_score}'
-			sprite = self._creation_text((str(temp_text), 36, (255, 255, 255)))
+			sprite = self.__creation_text((args[1], 36, (255, 255, 255)))
 			self.main_game.sc_main.blit(sprite, (590, 570))
 		elif cursor == 'win':
-			pass
+			sprite = self.__creation_text((args[0], 36, (255, 255, 255)))
+			self.main_game.sc_main.blit(sprite, (300, 300))
+
+	def create_sc_buttons(self, cursor: str) -> None:
+		button = CreationButton()
+
+		if cursor == 'bit':
+			sprite = button.return_sprite_to_sc({'suit': 'button', 'value': 'deal', 'pos_c': (630, 630)})
+			self.main_game.sc_main.blit(sprite[0], sprite[1])
+		elif cursor == 'game':
+			sprite = button.return_sprite_to_sc({'suit': 'button', 'value': 'yes', 'pos_c': (580, 630)})
+			self.main_game.sc_main.blit(sprite[0], sprite[1])
+
+			sprite = button.return_sprite_to_sc({'suit': 'button', 'value': 'no', 'pos_c': (680, 630)})
+			self.main_game.sc_main.blit(sprite[0], sprite[1])
+
+	def buttons_sc_cards(self):
+		pass
 
 	@staticmethod
-	def _creation_text(options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
+	def __creation_text(options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
 		"""Створення тексту гравців"""
 		py_text = pygame.font.Font(None, options[1])
 		py_text = py_text.render(options[0], True, options[2])
