@@ -37,6 +37,13 @@ class Distribution:
 	def __init__(self, game: Any) -> None:
 		self.main_game = game
 
+		self.start_game: bool = False
+		self.player_add: bool = False
+		self.player_pass: bool = False
+
+		self.player_score: int = 0
+		self.dealer_score: int = 0
+
 		self.cash_current: int = 0
 		self.cash_total: int = int(game.settings['game_amount'])
 

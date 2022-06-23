@@ -23,17 +23,16 @@ Description: Створення гри BlackJack для курсового пр�
 Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
-
+import time
 from typing import List, Tuple, Any
 
-from players.base import Base
 from sources.creation_deck import CreationDeck
 
 
-class Dealer(Base):
+class Dealer:
 	def __init__(self, sc: Any) -> None:
 		"""Клас для логіки дилера"""
-		super(Dealer, self).__init__(sc)
+		self.main_game = sc
 
 		self.__deck = CreationDeck()
 		self.__deck.update_shuffled()
@@ -45,34 +44,35 @@ class Dealer(Base):
 		self.__player_cards += self.__deck.shuffled_deck[3]
 
 	def start_distribution(self) -> None:
-		self.logic.buttons_sc_cards('start', self.__dealer_cards, self.__player_cards)
+		self.main_game.logic.buttons_sc_cards('start', self.__dealer_cards, self.__player_cards)
 
-		self.dealer_score = self.__count_score_distribution(self.__dealer_cards[1])
-		self.player_score = self.__count_score_distribution(self.__player_cards[1], self.__player_cards[3])
+		self.main_game.logic.dealer_score = self.__count_score_distribution(self.__dealer_cards[1])
+		self.main_game.logic.player_score = self.__count_score_distribution(self.__player_cards[1], self.__player_cards[3])
 
-		self.logic.create_sc_text('dealer', f'Dealer Score: {self.dealer_score}', f'Player Score: {self.player_score}')
+		self.main_game.logic.create_sc_text('dealer', f'Dealer Score: {self.main_game.logic.dealer_score}', f'Player Score: {self.main_game.logic.player_score}')
 
 	def player_game(self):
 		pass
 
 	def dealer_game(self):
-		self.logic.create_sc_text('win', self.__game_win_distribution(self.dealer_score, self.player_score))
+		self.main_game.logic.create_sc_text('win', self.__game_win_distribution(self.main_game.logic.dealer_score, self.main_game.logic.player_score))
 
-		# self.start_game = False
-		# self.player_pass = False
-		# self.logic.main_game.creation_object()
-		# self.logic.create_sc_text('player', str(self.logic.cash_current), str(self.logic.cash_total))
-		# self.logic.create_sc_buttons('game')
+		self.main_game.creation_object()
+		self.main_game.logic.start_game = False
+		self.main_game.logic.player_add = False
+		self.main_game.logic.player_pass = False
+		self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current), str(self.main_game.logic.cash_total))
+		self.main_game.logic.create_sc_buttons('start')
 
 
 	def __game_win_distribution(self, *args) -> str:
 		if args[0] > args[1] <= 21:
-			self.logic.cash_total -= self.logic.cash_current
-			self.logic.cash_current = 0
+			self.main_game.logic.cash_total -= self.main_game.logic.cash_current
+			self.main_game.logic.cash_current = 0
 			return 'Dealer WIN!'
 		elif args[1] > args[0] <= 21:
-			self.logic.cash_total += self.logic.cash_current
-			self.logic.cash_current = 0
+			self.main_game.logic.cash_total += self.main_game.logic.cash_current
+			self.main_game.logic.cash_current = 0
 			return 'Player WIN!'
 
 	@staticmethod

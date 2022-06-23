@@ -31,6 +31,7 @@ import pygame
 
 from players.player import Player
 from players.dealer import Dealer
+from sources.distribution import Distribution
 
 from creation.creation_chips import CreationChips
 from creation.creation_shirts import CreationShirts
@@ -45,6 +46,7 @@ class Game:
 		"""Основний файл гри: логіка, гравці"""
 		self.__settings: Dict[str, str] = settings
 		self.__game_chips: GameCreationChips = None
+		self.__logic: Distribution = Distribution(self)
 		self.__sc_main: pygame = None
 		self.__player: Player = None
 		self.__dealer: Dealer = None
@@ -64,6 +66,10 @@ class Game:
 	@property
 	def sc_main(self) ->pygame:
 		return self.__sc_main
+
+	@property
+	def logic(self) -> Distribution:
+		return self.__logic
 
 	@property
 	def settings(self) -> Dict:
@@ -103,25 +109,25 @@ class Game:
 				elif event.type == pygame.MOUSEBUTTONDOWN:
 					x, y = pygame.mouse.get_pos()
 
-					if not self.__player.start_game:
+					if not self.__logic.start_game:
 						chip_val: int = self.__game_chips.mouse_event_click(x, y)
 
 						if not chip_val == None:
 							self.__player.current_rate(chip_val)
 						else:
-							if self.__player.logic.cash_current > 0:
+							if self.logic.cash_current > 0:
 								self.__player.mouse_event_click_bit(x, y)
 
-								if self.__player.start_game:
+								if self.__logic.start_game:
 									self.__dealer.start_distribution()
 					else:
 						self.__player.mouse_event_click_game(x, y)
 
-						if self.__player.player_pass:
+						if self.__logic.player_pass:
 							self.__dealer.dealer_game()
 							print('Game Over')
 
-						if self.__player.player_add:
+						if self.__logic.player_add:
 							self.__dealer.player_game()
 							print('add card')
 

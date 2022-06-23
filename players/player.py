@@ -26,42 +26,39 @@ https://www.linkedin.com/in/ihor-cheberiak/
 
 from typing import Any
 
-from players.base import Base
 
-
-class Player(Base):
+class Player:
 	def __init__(self, sc: Any) -> None:
 		"""Клас для логіки гравця"""
-		super(Player, self).__init__(sc)
+		self.main_game = sc
 
-		self.logic.create_sc_text('player', str(self.logic.cash_current), str(self.logic.cash_total))
-		self.logic.create_sc_buttons('bit')
+		self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current), str(self.main_game.logic.cash_total))
 
 	def current_rate(self, chip_val: int) -> None:
 		if not chip_val == -1:
-			temp = self.logic.cash_total - chip_val
+			temp = self.main_game.logic.cash_total - chip_val
 
 			if temp >= 0:
-				self.logic.cash_total -= chip_val
-				self.logic.cash_current += chip_val
+				self.main_game.logic.cash_total -= chip_val
+				self.main_game.logic.cash_current += chip_val
 		else:
-			self.logic.cash_total += self.logic.cash_current
-			self.logic.cash_current = 0
+			self.main_game.logic.cash_total += self.main_game.logic.cash_current
+			self.main_game.logic.cash_current = 0
 
-		self.logic.main_game.creation_object()
-		self.logic.create_sc_text('player', str(self.logic.cash_current), str(self.logic.cash_total))
-		self.logic.create_sc_buttons('bit')
+		self.main_game.logic.main_game.creation_object()
+		self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current), str(self.main_game.logic.cash_total))
+		self.main_game.logic.create_sc_buttons('bit')
 
 	def mouse_event_click_bit(self, mouse_x: int, mouse_y: int) -> None:
 		if 635 <= mouse_x <= 715 and 635 <= mouse_y <= 715:
-			self.start_game = True
-			self.logic.main_game.creation_object()
-			self.logic.create_sc_text('player', str(self.logic.cash_current), str(self.logic.cash_total))
-			self.logic.create_sc_buttons('game')
+			self.main_game.logic.start_game = True
+			self.main_game.logic.main_game.creation_object()
+			self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current), str(self.main_game.logic.cash_total))
+			self.main_game.logic.create_sc_buttons('game')
 			print('Start Game')
 
 	def mouse_event_click_game(self, mouse_x: int, mouse_y: int) -> None:
 		if 585 <= mouse_x <= 665 and 635 <= mouse_y <= 715:
-			self.player_add = True
+			self.main_game.logic.player_add = True
 		elif 685 <= mouse_x <= 765 and 635 <= mouse_y <= 715:
-			self.player_pass = True
+			self.main_game.logic.player_pass = True
