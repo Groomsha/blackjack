@@ -24,7 +24,7 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Any
+from typing import Any
 
 from sources.distribution import Distribution
 
@@ -40,9 +40,6 @@ class Base:
 
 		self.player_pass: bool = False
 		self.player_add: bool = False
-
-		self.cash_current: int = 0
-		self.cash_total: int = int(sc.settings['game_amount'])
 
 	@property
 	def logic(self) -> Distribution:

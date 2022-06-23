@@ -24,10 +24,9 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Any
+from typing import Any
 
 from players.base import Base
-from creation.creation_button import CreationButton
 
 
 class Player(Base):
@@ -35,29 +34,29 @@ class Player(Base):
 		"""Клас для логіки гравця"""
 		super(Player, self).__init__(sc)
 
-		self.logic.create_sc_text('player', str(self.cash_current), str(self.cash_total))
+		self.logic.create_sc_text('player', str(self.logic.cash_current), str(self.logic.cash_total))
 		self.logic.create_sc_buttons('bit')
 
 	def current_rate(self, chip_val: int) -> None:
 		if not chip_val == -1:
-			temp = self.cash_total - chip_val
+			temp = self.logic.cash_total - chip_val
 
 			if temp >= 0:
-				self.cash_total -= chip_val
-				self.cash_current += chip_val
+				self.logic.cash_total -= chip_val
+				self.logic.cash_current += chip_val
 		else:
-			self.cash_total += self.cash_current
-			self.cash_current = 0
+			self.logic.cash_total += self.logic.cash_current
+			self.logic.cash_current = 0
 
 		self.logic.main_game.creation_object()
-		self.logic.create_sc_text('player', str(self.cash_current), str(self.cash_total))
+		self.logic.create_sc_text('player', str(self.logic.cash_current), str(self.logic.cash_total))
 		self.logic.create_sc_buttons('bit')
 
 	def mouse_event_click_bit(self, mouse_x: int, mouse_y: int) -> None:
 		if 635 <= mouse_x <= 715 and 635 <= mouse_y <= 715:
 			self.start_game = True
 			self.logic.main_game.creation_object()
-			self.logic.create_sc_text('player', str(self.cash_current), str(self.cash_total))
+			self.logic.create_sc_text('player', str(self.logic.cash_current), str(self.logic.cash_total))
 			self.logic.create_sc_buttons('game')
 			print('Start Game')
 

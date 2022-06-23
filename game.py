@@ -109,11 +109,11 @@ class Game:
 						if not chip_val == None:
 							self.__player.current_rate(chip_val)
 						else:
-							if self.__player.cash_current > 0:
+							if self.__player.logic.cash_current > 0:
 								self.__player.mouse_event_click_bit(x, y)
 
 								if self.__player.start_game:
-									self.__dealer.distribution()
+									self.__dealer.start_distribution()
 					else:
 						self.__player.mouse_event_click_game(x, y)
 

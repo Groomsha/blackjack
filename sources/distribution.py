@@ -28,12 +28,17 @@ from typing import Tuple, Any
 
 import pygame
 
+from creation.creation_cards import CreationCards
+from creation.creation_shirts import CreationShirts
 from creation.creation_button import CreationButton
 
 
 class Distribution:
 	def __init__(self, game: Any) -> None:
 		self.main_game = game
+
+		self.cash_current: int = 0
+		self.cash_total: int = int(game.settings['game_amount'])
 
 	def create_sc_text(self, cursor: str, *args) -> None:
 		if cursor == 'player':
@@ -43,14 +48,14 @@ class Distribution:
 			sprite = self.__creation_text((args[1], 36, (255, 255, 255)))
 			self.main_game.sc_main.blit(sprite, (1065, 738))
 		elif cursor == 'dealer':
-			sprite = self.__creation_text((args[0], 36, (255, 255, 255)))
+			sprite = self.__creation_text((args[0], 36, (0, 0, 0)))
 			self.main_game.sc_main.blit(sprite, (590, 300))
 
-			sprite = self.__creation_text((args[1], 36, (255, 255, 255)))
+			sprite = self.__creation_text((args[1], 36, (0, 0, 0)))
 			self.main_game.sc_main.blit(sprite, (590, 570))
 		elif cursor == 'win':
-			sprite = self.__creation_text((args[0], 36, (255, 255, 255)))
-			self.main_game.sc_main.blit(sprite, (300, 300))
+			sprite = self.__creation_text((args[0], 44, (0, 0, 0)))
+			self.main_game.sc_main.blit(sprite, (600, 390))
 
 	def create_sc_buttons(self, cursor: str) -> None:
 		button = CreationButton()
@@ -65,8 +70,24 @@ class Distribution:
 			sprite = button.return_sprite_to_sc({'suit': 'button', 'value': 'no', 'pos_c': (680, 630)})
 			self.main_game.sc_main.blit(sprite[0], sprite[1])
 
-	def buttons_sc_cards(self):
-		pass
+	def buttons_sc_cards(self, cursor: str, dealer: Tuple, player: Tuple):
+		color_opt: str = self.main_game.shirts_color
+
+		cards = CreationCards()
+		shirts = CreationShirts()
+
+		if cursor == 'start':
+			sprite = cards.return_sprite_to_sc({'suit': dealer[0], 'value': dealer[1], 'pos_c': (600, 200)})
+			self.main_game.sc_main.blit(sprite[0], sprite[1])
+
+			sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': color_opt, 'pos_c': (680, 200)})
+			self.main_game.sc_main.blit(sprite[0], sprite[1])
+
+			sprite = cards.return_sprite_to_sc({'suit': player[0], 'value': player[1], 'pos_c': (600, 470)})
+			self.main_game.sc_main.blit(sprite[0], sprite[1])
+
+			sprite = cards.return_sprite_to_sc({'suit': player[2], 'value': player[3], 'pos_c': (680, 470)})
+			self.main_game.sc_main.blit(sprite[0], sprite[1])
 
 	@staticmethod
 	def __creation_text(options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:

@@ -24,12 +24,10 @@ Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
 
-from typing import Dict, Tuple, List, Any
+from typing import List, Tuple, Any
 
 from players.base import Base
 from sources.creation_deck import CreationDeck
-from creation.creation_cards import CreationCards
-from creation.creation_shirts import CreationShirts
 
 
 class Dealer(Base):
@@ -40,40 +38,42 @@ class Dealer(Base):
 		self.__deck = CreationDeck()
 		self.__deck.update_shuffled()
 
-		self.__player_cards: Tuple = tuple()
-		self.__dealer_cards: Tuple = tuple()
-
-		# self.distribution()
-
-	def distribution(self) -> None:
-		cards = CreationCards()
-		shirts = CreationShirts()
-
-		self.__dealer_cards += self.__deck.shuffled_deck[0]
+		self.__dealer_cards: Tuple = self.__deck.shuffled_deck[0]
 		self.__dealer_cards += self.__deck.shuffled_deck[1]
 
-		self.__player_cards += self.__deck.shuffled_deck[2]
+		self.__player_cards: Tuple = self.__deck.shuffled_deck[2]
 		self.__player_cards += self.__deck.shuffled_deck[3]
 
-		card_sprite = cards.return_sprite_to_sc({'suit': self.__dealer_cards[0], 'value': self.__dealer_cards[1], 'pos_c': (600, 200)})
-		self.logic.main_game.sc_main.blit(card_sprite[0], card_sprite[1])
-		shirts_sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': self.logic.main_game.shirts_color, 'pos_c': (680, 200)})
-		self.logic.main_game.sc_main.blit(shirts_sprite[0], shirts_sprite[1])
-
-		card_sprite = cards.return_sprite_to_sc({'suit': self.__player_cards[0], 'value': self.__player_cards[1], 'pos_c': (600, 470)})
-		self.logic.main_game.sc_main.blit(card_sprite[0], card_sprite[1])
-		card_sprite = cards.return_sprite_to_sc({'suit': self.__player_cards[2], 'value': self.__player_cards[3], 'pos_c': (680, 470)})
-		self.logic.main_game.sc_main.blit(card_sprite[0], card_sprite[1])
+	def start_distribution(self) -> None:
+		self.logic.buttons_sc_cards('start', self.__dealer_cards, self.__player_cards)
 
 		self.dealer_score = self.__count_score_distribution(self.__dealer_cards[1])
 		self.player_score = self.__count_score_distribution(self.__player_cards[1], self.__player_cards[3])
+
 		self.logic.create_sc_text('dealer', f'Dealer Score: {self.dealer_score}', f'Player Score: {self.player_score}')
 
 	def player_game(self):
 		pass
 
 	def dealer_game(self):
-		self.logic.main_game.creation_object()
+		self.logic.create_sc_text('win', self.__game_win_distribution(self.dealer_score, self.player_score))
+
+		# self.start_game = False
+		# self.player_pass = False
+		# self.logic.main_game.creation_object()
+		# self.logic.create_sc_text('player', str(self.logic.cash_current), str(self.logic.cash_total))
+		# self.logic.create_sc_buttons('game')
+
+
+	def __game_win_distribution(self, *args) -> str:
+		if args[0] > args[1] <= 21:
+			self.logic.cash_total -= self.logic.cash_current
+			self.logic.cash_current = 0
+			return 'Dealer WIN!'
+		elif args[1] > args[0] <= 21:
+			self.logic.cash_total += self.logic.cash_current
+			self.logic.cash_current = 0
+			return 'Player WIN!'
 
 	@staticmethod
 	def __count_score_distribution(*args) -> int:
