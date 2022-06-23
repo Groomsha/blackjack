@@ -34,36 +34,79 @@ class Dealer:
 		"""Клас для логіки дилера"""
 		self.main_game = sc
 
-		self.__deck = CreationDeck()
-		self.__deck.update_shuffled()
+		self.__deck_new = CreationDeck()
+		self.__deck_new.update_shuffled()
 
-		self.__dealer_cards: Tuple = self.__deck.shuffled_deck[0]
-		self.__dealer_cards += self.__deck.shuffled_deck[1]
+		self.__deck_shuffled = [deck for deck in self.__deck_new.shuffled_deck]
 
-		self.__player_cards: Tuple = self.__deck.shuffled_deck[2]
-		self.__player_cards += self.__deck.shuffled_deck[3]
+		self.__dealer_cards: Tuple = None
+		self.__player_cards: Tuple = None
 
-	def start_distribution(self) -> None:
-		self.main_game.logic.buttons_sc_cards('start', self.__dealer_cards, self.__player_cards)
+	def start_distribution(self, cursor: str) -> None:
+		counter: int = 0
+		count_score: List = []
 
-		self.main_game.logic.dealer_score = self.__count_score_distribution(self.__dealer_cards[1])
-		self.main_game.logic.player_score = self.__count_score_distribution(self.__player_cards[1], self.__player_cards[3])
+		if cursor == 'start':
+			self.__dealer_cards = self.__deck_shuffled.pop(0)
+			self.__dealer_cards += self.__deck_shuffled.pop(0)
 
-		self.main_game.logic.create_sc_text('dealer', f'Dealer Score: {self.main_game.logic.dealer_score}', f'Player Score: {self.main_game.logic.player_score}')
+			self.__player_cards = self.__deck_shuffled.pop(0)
+			self.__player_cards += self.__deck_shuffled.pop(0)
+
+			self.main_game.logic.buttons_sc_cards('start', self.__dealer_cards, self.__player_cards)
+			self.main_game.logic.dealer_score = self.__count_score_distribution(self.__dealer_cards[1])
+		elif cursor == 'player':
+			self.__player_cards += self.__deck_shuffled.pop(0)
+
+			self.main_game.logic.buttons_sc_cards('player', self.__dealer_cards, self.__player_cards)
+			self.main_game.logic.dealer_score = self.__count_score_distribution(self.__dealer_cards[1])
+		elif cursor == 'dealer':
+			# self.__dealer_cards += self.__deck_shuffled.pop(0)
+			self.main_game.logic.buttons_sc_cards('dealer', self.__dealer_cards, self.__player_cards)
+
+			for number in self.__dealer_cards:
+				if not counter%2 == 0:
+					count_score.append(number)
+				counter += 1
+
+			# self.main_game.logic.dealer_score = self.__count_score_distribution(count_score)
+
+			# while True:
+			# 	if self.__count_score_distribution(count_score) <= 19:
+			# 		self.__dealer_cards += self.__deck_shuffled.pop(0)
+			# 	else:
+			# 		break
+
+			# self.main_game.logic.buttons_sc_cards('dealer', self.__dealer_cards, self.__player_cards)
+			self.main_game.logic.dealer_score = self.__count_score_distribution(count_score)
+
+		for number in self.__player_cards:
+			if not counter % 2 == 0:
+				count_score.append(number)
+			counter += 1
+
+		self.main_game.logic.player_score = self.__count_score_distribution(count_score)
+		self.main_game.logic.create_sc_text('dealer', f'Dealer Score: {self.main_game.logic.dealer_score}',f'Player Score: {self.main_game.logic.player_score}')
+
+		if self.__game_win_distribution(self.main_game.logic.dealer_score, self.main_game.logic.player_score) == 'Dealer WIN!' :
+			self.dealer_game(False)
 
 	def player_game(self):
 		self.main_game.creation_object()
-		# self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current),str(self.main_game.logic.cash_total))
-		# # self.main_game.logic.buttons_sc_cards('start', self.__dealer_cards, self.__player_cards)
-		# self.main_game.logic.create_sc_text('dealer', f'Dealer Score: {self.main_game.logic.dealer_score}',f'Player Score: {self.main_game.logic.player_score}')
-		# self.main_game.logic.create_sc_buttons('game')
+		self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current),str(self.main_game.logic.cash_total))
+		self.main_game.logic.create_sc_buttons('game')
+		self.start_distribution('player')
 
-	def dealer_game(self):
-
-
+	def dealer_game(self, cursor: bool):
+		if cursor:
+			self.main_game.creation_object()
+			self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current),str(self.main_game.logic.cash_total))
+			self.start_distribution('dealer')
 
 		#####################################################
 		self.main_game.logic.create_sc_text('win', self.__game_win_distribution(self.main_game.logic.dealer_score, self.main_game.logic.player_score))
+		self.__dealer_cards = None
+		self.__player_cards = None
 
 		timer_to_new_game = Timer(2, self.new_game)
 		timer_to_new_game.start()
@@ -75,12 +118,19 @@ class Dealer:
 		self.main_game.logic.create_sc_buttons('start')
 
 	def __game_win_distribution(self, *args) -> str:
+		if args[0] > 21:
+			self.main_game.logic.cash_total += self.main_game.logic.cash_current*2
+			self.main_game.logic.cash_current = 0
+			return 'Player WIN!'
+		elif args[1] > 21:
+			self.main_game.logic.cash_current = 0
+			return 'Dealer WIN!'
+
 		if args[0] > args[1] <= 21:
-			self.main_game.logic.cash_total -= self.main_game.logic.cash_current
 			self.main_game.logic.cash_current = 0
 			return 'Dealer WIN!'
 		elif args[1] > args[0] <= 21:
-			self.main_game.logic.cash_total += self.main_game.logic.cash_current
+			self.main_game.logic.cash_total += self.main_game.logic.cash_current * 2
 			self.main_game.logic.cash_current = 0
 			return 'Player WIN!'
 
@@ -88,7 +138,7 @@ class Dealer:
 	def __count_score_distribution(*args) -> int:
 		temp_list: List = []
 
-		for literal in args:
+		for literal in args[0]:
 			if not literal in 'AVDK':
 				temp_list.append(int(literal))
 			elif literal in 'VDK':

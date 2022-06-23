@@ -56,8 +56,7 @@ class Game:
 		self.__shirts_color: str = 'red' if random.randint(0, 1) else 'blue'
 		self.__sc_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_icon(pygame.image.load('images/blackjack-icon.ico'))
-		pygame.display.set_caption(f'BlackJack ({self.__settings.get("description")}) '
-								f''f'{self.__settings.get("version_app")}')
+		pygame.display.set_caption(f'BlackJack ({self.__settings.get("description")}) {self.__settings.get("version_app")}')
 
 		self.creation_object()
 		self.__creation_opponents()
@@ -119,13 +118,13 @@ class Game:
 								self.__player.mouse_event_click_bit(x, y)
 
 								if self.__logic.start_game:
-									self.__dealer.start_distribution()
+									self.__dealer.start_distribution('start')
 					else:
 						self.__player.mouse_event_click_game(x, y)
 
 						if self.__logic.player_pass:
 							self.__logic.player_pass = False
-							self.__dealer.dealer_game()
+							self.__dealer.dealer_game(True)
 							print('Game Over')
 
 						if self.__logic.player_add:

@@ -79,22 +79,50 @@ class Distribution:
 
 	def buttons_sc_cards(self, cursor: str, dealer: Tuple, player: Tuple):
 		color_opt: str = self.main_game.shirts_color
+		pos_player_x: int = 600
+		pos_dealer_x: int = 600
+		pos_step: int = 80
+		counter: int = 0
 
 		cards = CreationCards()
 		shirts = CreationShirts()
 
-		if cursor == 'start':
+		if cursor == 'start' or cursor == 'player':
 			sprite = cards.return_sprite_to_sc({'suit': dealer[0], 'value': dealer[1], 'pos_c': (600, 200)})
 			self.main_game.sc_main.blit(sprite[0], sprite[1])
 
 			sprite = shirts.return_sprite_to_sc({'shirt': 'shirts', 'color': color_opt, 'pos_c': (680, 200)})
 			self.main_game.sc_main.blit(sprite[0], sprite[1])
 
-			sprite = cards.return_sprite_to_sc({'suit': player[0], 'value': player[1], 'pos_c': (600, 470)})
-			self.main_game.sc_main.blit(sprite[0], sprite[1])
+			for _ in player:
+				if not counter%2 == 0:
+					if counter > 1:
+						pos_player_x += pos_step
 
-			sprite = cards.return_sprite_to_sc({'suit': player[2], 'value': player[3], 'pos_c': (680, 470)})
-			self.main_game.sc_main.blit(sprite[0], sprite[1])
+					sprite = cards.return_sprite_to_sc({'suit': player[counter-1], 'value': player[counter], 'pos_c': (pos_player_x, 470)})
+					self.main_game.sc_main.blit(sprite[0], sprite[1])
+				counter += 1
+
+		elif cursor == 'dealer':
+			for _ in dealer:
+				if not counter%2 == 0:
+					if counter > 1:
+						pos_dealer_x += pos_step
+
+					sprite = cards.return_sprite_to_sc({'suit': dealer[counter-1], 'value': dealer[counter], 'pos_c': (pos_dealer_x, 200)})
+					self.main_game.sc_main.blit(sprite[0], sprite[1])
+				counter += 1
+
+			counter = 0
+
+			for _ in player:
+				if not counter%2 == 0:
+					if counter > 1:
+						pos_player_x += pos_step
+
+					sprite = cards.return_sprite_to_sc({'suit': player[counter-1], 'value': player[counter], 'pos_c': (pos_player_x, 470)})
+					self.main_game.sc_main.blit(sprite[0], sprite[1])
+				counter += 1
 
 	@staticmethod
 	def __creation_text(options: Tuple[str, int, Tuple[int, int, int]]) -> pygame.Surface:
