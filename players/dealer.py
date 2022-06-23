@@ -23,7 +23,7 @@ Description: Створення гри BlackJack для курсового пр�
 Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
-import time
+from threading import Timer
 from typing import List, Tuple, Any
 
 from sources.creation_deck import CreationDeck
@@ -52,18 +52,27 @@ class Dealer:
 		self.main_game.logic.create_sc_text('dealer', f'Dealer Score: {self.main_game.logic.dealer_score}', f'Player Score: {self.main_game.logic.player_score}')
 
 	def player_game(self):
-		pass
+		self.main_game.creation_object()
+		# self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current),str(self.main_game.logic.cash_total))
+		# # self.main_game.logic.buttons_sc_cards('start', self.__dealer_cards, self.__player_cards)
+		# self.main_game.logic.create_sc_text('dealer', f'Dealer Score: {self.main_game.logic.dealer_score}',f'Player Score: {self.main_game.logic.player_score}')
+		# self.main_game.logic.create_sc_buttons('game')
 
 	def dealer_game(self):
+
+
+
+		#####################################################
 		self.main_game.logic.create_sc_text('win', self.__game_win_distribution(self.main_game.logic.dealer_score, self.main_game.logic.player_score))
 
+		timer_to_new_game = Timer(2, self.new_game)
+		timer_to_new_game.start()
+
+	def new_game(self) -> None:
 		self.main_game.creation_object()
 		self.main_game.logic.start_game = False
-		self.main_game.logic.player_add = False
-		self.main_game.logic.player_pass = False
-		self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current), str(self.main_game.logic.cash_total))
+		self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current),str(self.main_game.logic.cash_total))
 		self.main_game.logic.create_sc_buttons('start')
-
 
 	def __game_win_distribution(self, *args) -> str:
 		if args[0] > args[1] <= 21:

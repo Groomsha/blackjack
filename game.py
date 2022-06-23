@@ -124,10 +124,12 @@ class Game:
 						self.__player.mouse_event_click_game(x, y)
 
 						if self.__logic.player_pass:
+							self.__logic.player_pass = False
 							self.__dealer.dealer_game()
 							print('Game Over')
 
 						if self.__logic.player_add:
+							self.__logic.player_add = False
 							self.__dealer.player_game()
 							print('add card')
 
