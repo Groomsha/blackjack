@@ -55,7 +55,6 @@ class Player:
 			self.main_game.logic.main_game.creation_object()
 			self.main_game.logic.create_sc_text('player', str(self.main_game.logic.cash_current), str(self.main_game.logic.cash_total))
 			self.main_game.logic.create_sc_buttons('game')
-			print('Start Game')
 
 	def mouse_event_click_game(self, mouse_x: int, mouse_y: int) -> None:
 		if 585 <= mouse_x <= 665 and 635 <= mouse_y <= 715:

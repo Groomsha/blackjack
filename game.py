@@ -125,12 +125,10 @@ class Game:
 						if self.__logic.player_pass:
 							self.__logic.player_pass = False
 							self.__dealer.dealer_game(True)
-							print('Game Over')
 
 						if self.__logic.player_add:
 							self.__logic.player_add = False
 							self.__dealer.player_game()
-							print('add card')
 
 			clock.tick(self.FPS)
 			pygame.display.update()

@@ -38,5 +38,5 @@ if __name__ == '__main__':
 	except FileNotFoundError as e:
 		print(e)
 	else:
-		settings.update({"version_app": "v.0.9"})
+		settings.update({"version_app": "v.0.9.9"})
 		start_game = Game(settings)
