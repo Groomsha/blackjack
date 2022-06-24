@@ -23,6 +23,7 @@ Description: Створення гри BlackJack для курсового пр�
 Ihor Cheberiak (c) 2021
 https://www.linkedin.com/in/ihor-cheberiak/
 """
+
 from threading import Timer
 from typing import List, Tuple, Any
 
@@ -68,7 +69,10 @@ class Dealer:
 					counter += 1
 
 				if self.__count_score_distribution(count_score) <= 19:
-					self.__dealer_cards += self.__deck_shuffled.pop(0)
+					player_score_cards = self.player_score()
+
+					if player_score_cards < 21:
+						self.__dealer_cards += self.__deck_shuffled.pop(0)
 				else:
 					self.main_game.logic.buttons_sc_cards('dealer', self.__dealer_cards, self.__player_cards)
 					break
@@ -82,15 +86,19 @@ class Dealer:
 
 			self.main_game.logic.dealer_score = self.__count_score_distribution(count_score)
 
+		player_score_cards = self.player_score()
+		self.main_game.logic.create_sc_text('dealer', f'Dealer Score: {self.main_game.logic.dealer_score}', f'Player Score: {player_score_cards}')
+
+	def player_score(self) -> int:
 		counter: int = 0
 		count_score: List = []
 		for number in self.__player_cards:
-			if not counter % 2 == 0:
+			if not counter%2 == 0:
 				count_score.append(number)
 			counter += 1
 
 		self.main_game.logic.player_score = self.__count_score_distribution(count_score)
-		self.main_game.logic.create_sc_text('dealer', f'Dealer Score: {self.main_game.logic.dealer_score}', f'Player Score: {self.main_game.logic.player_score}')
+		return self.main_game.logic.player_score
 
 	def player_game(self):
 		self.main_game.creation_object()
@@ -120,53 +128,39 @@ class Dealer:
 
 	def __game_win_distribution(self, *args) -> str:
 		if args[0] <= 21:
-			if args[0] > args[1]:
-				return 'Dealer WIN!'
-		else:
-			pass
+			if args[1] <= 21:
+				if args[0] < args[1]:
+					self.main_game.logic.cash_total += self.main_game.logic.cash_current*2
+					self.main_game.logic.cash_current = 0
+					return 'Player WIN!'
 
-		if args[1] <= 21:
-			if args[1] > args[0]:
+				if args[0] > args[1]:
+					self.main_game.logic.cash_current = 0
+					return 'Dealer WIN!'
+
+				if args[0] == args[1]:
+					self.main_game.logic.cash_total += self.main_game.logic.cash_current
+					self.main_game.logic.cash_current = 0
+					return 'Draw!'
+			else:
+				if args[0] < args[1]:
+					self.main_game.logic.cash_current = 0
+					return 'Dealer WIN!'
+
+				if args[0] > args[1]:
+					self.main_game.logic.cash_total += self.main_game.logic.cash_current*2
+					self.main_game.logic.cash_current = 0
+					return 'Player WIN!'
+		else:
+			if args[1] > 21:
+				self.main_game.logic.cash_total += self.main_game.logic.cash_current
+				self.main_game.logic.cash_current = 0
+				return 'Draw!'
+
+			if args[1] <= 21:
+				self.main_game.logic.cash_total += self.main_game.logic.cash_current*2
+				self.main_game.logic.cash_current = 0
 				return 'Player WIN!'
-		else:
-			pass
-
-		# if args[0] <= 21 or args[1] <= 21:
-		# 	print('One')
-		# 	if args[1] > args[0]:
-		# 		if args[1] <= 21:
-		# 			self.main_game.logic.cash_total += self.main_game.logic.cash_current * 2
-		# 			self.main_game.logic.cash_current = 0
-		# 			return 'Player WIN!'
-		# 	elif args[0] > args[1]:
-		# 		if args[0] <= 21:
-		# 			self.main_game.logic.cash_current = 0
-		# 			return 'Dealer WIN!'
-		# 	elif args[0] < args[1]:
-		# 		if args[1] > 21:
-		# 			self.main_game.logic.cash_current = 0
-		# 			return 'Dealer WIN!'
-		# 	elif args[0] == args[1]:
-		# 		self.main_game.logic.cash_total += self.main_game.logic.cash_current
-		# 		self.main_game.logic.cash_current = 0
-		# 		return 'Draw!'
-		# else:
-		# 	print('Two')
-		# 	self.main_game.logic.cash_total += self.main_game.logic.cash_current
-		# 	self.main_game.logic.cash_current = 0
-		# 	return 'Draw!'
-
-		# if args[0] > 21 and args[1] > 21:
-		# 	self.main_game.logic.cash_total += self.main_game.logic.cash_current
-		# 	self.main_game.logic.cash_current = 0
-		# 	return 'Draw!'
-			# if args[0] > 21:
-			# 	self.main_game.logic.cash_total += self.main_game.logic.cash_current * 2
-			# 	self.main_game.logic.cash_current = 0
-			# 	return 'Player WIN!'
-			# elif args[1] > 21:
-			# 	self.main_game.logic.cash_current = 0
-			# 	return 'Dealer WIN!'
 
 	@staticmethod
 	def __count_score_distribution(*args) -> int:
