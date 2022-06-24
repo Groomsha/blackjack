@@ -175,7 +175,7 @@ class Dealer:
 			elif literal == 'A':
 				ace = True
 				temp_list.append(11)
-			elif literal == 'A' and ace:
+			elif literal == 'A' and ace == True:
 				temp_list.append(1)
 
 		return sum(temp_list)
